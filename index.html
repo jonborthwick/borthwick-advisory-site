@@ -105,10 +105,17 @@ section { padding: 100px 40px; }
 
 /* ── HERO ── */
 #hero {
-  padding-top: 160px;
-  padding-bottom: 120px;
+  padding-top: 140px;
+  padding-bottom: 100px;
   background: var(--white);
   border-bottom: 1px solid var(--border);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
 }
 
 .hero-eyebrow {
@@ -122,21 +129,19 @@ section { padding: 100px 40px; }
 
 .hero-headline {
   font-family: var(--serif);
-  font-size: clamp(36px, 5vw, 58px);
+  font-size: clamp(32px, 4vw, 52px);
   font-weight: 400;
   line-height: 1.15;
   color: var(--black);
   letter-spacing: -0.02em;
   margin-bottom: 28px;
-  max-width: 780px;
 }
 
 .hero-sub {
-  font-size: 18px;
+  font-size: 17px;
   color: var(--mid);
   line-height: 1.7;
-  max-width: 580px;
-  margin-bottom: 44px;
+  margin-bottom: 40px;
 }
 
 .hero-actions {
@@ -177,16 +182,16 @@ section { padding: 100px 40px; }
 
 .hero-stats {
   display: flex;
-  gap: 48px;
-  margin-top: 72px;
-  padding-top: 40px;
+  gap: 40px;
+  margin-top: 56px;
+  padding-top: 36px;
   border-top: 1px solid var(--border);
   flex-wrap: wrap;
 }
 
 .hero-stat-num {
   font-family: var(--serif);
-  font-size: 38px;
+  font-size: 34px;
   font-weight: 400;
   color: var(--black);
   letter-spacing: -0.03em;
@@ -195,10 +200,151 @@ section { padding: 100px 40px; }
 }
 
 .hero-stat-label {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--muted);
   line-height: 1.4;
-  max-width: 160px;
+  max-width: 140px;
+}
+
+/* ── BOT PREVIEW MOCKUP ── */
+.bot-preview {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.bot-preview-bar {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bot-preview-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.bot-preview-title span { color: var(--muted); font-weight: 400; }
+
+.bot-preview-access {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+}
+
+.bot-preview-body { padding: 20px; }
+
+.bot-preview-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 8px;
+}
+
+.bot-preview-field {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--off-black);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.bot-preview-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.bot-preview-chip {
+  font-size: 11px;
+  color: var(--mid);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.bot-preview-submit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bot-preview-btn {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: default;
+}
+
+.bot-preview-hint {
+  font-size: 12px;
+  color: var(--faint);
+}
+
+.bot-preview-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+.bot-preview-response {
+  padding: 0;
+}
+
+.bot-preview-response-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.bot-preview-response-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+.bot-preview-section-head {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 6px;
+}
+
+.bot-preview-text {
+  font-size: 12px;
+  color: var(--off-black);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.bot-preview-fade {
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--white));
+  margin: -10px -20px 0;
 }
 
 /* ── HOW IT WORKS ── */
@@ -239,9 +385,7 @@ section { padding: 100px 40px; }
   gap: 40px;
 }
 
-.step {
-  position: relative;
-}
+.step { position: relative; }
 
 .step-num {
   width: 36px;
@@ -345,16 +489,281 @@ section { padding: 100px 40px; }
   font-weight: 500;
 }
 
+/* ── USE CASES ── */
+#usecases {
+  background: var(--bg);
+}
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.case-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.case-q {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+  font-style: italic;
+}
+
+.case-q::before { content: '"'; }
+.case-q::after { content: '"'; }
+
+.case-a {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.65;
+}
+
+/* ── SAMPLE OUTPUT ── */
+#sample {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.sample-wrap {
+  margin-top: 48px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+}
+
+.sample-input {
+  background: var(--bg);
+  padding: 32px 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sample-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.sample-field-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sample-field-hint {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 10px;
+  color: var(--faint);
+}
+
+.sample-field-value {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--off-black);
+  line-height: 1.55;
+  font-style: italic;
+}
+
+.sample-response {
+  background: var(--white);
+  padding: 40px;
+}
+
+.sample-response-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sample-response-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+.sample-response-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.sample-action-btn {
+  font-size: 12px;
+  color: var(--mid);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 12px;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+
+.sample-action-btn:hover { border-color: var(--faint); color: var(--black); }
+
+.sample-section {
+  margin-bottom: 24px;
+}
+
+.sample-section-head {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sample-section-body {
+  font-size: 15px;
+  color: var(--off-black);
+  line-height: 1.75;
+}
+
+.sample-point {
+  margin-bottom: 18px;
+}
+
+.sample-point-head {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+
+.sample-point-body {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.7;
+}
+
+.sample-priority {
+  font-size: 14px;
+  color: var(--off-black);
+  line-height: 1.7;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.sample-flag {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sample-flag-btn {
+  font-size: 13px;
+  color: var(--mid);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 14px;
+  text-decoration: none;
+}
+
+.sample-flag-note {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.sample-sign {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 20px;
+}
+
 /* ── TIERS ── */
 #tiers {
   background: var(--bg);
 }
 
+.free-trial-banner {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 48px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.free-trial-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.free-trial-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--accent-light);
+  color: var(--accent-mid);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.free-trial-text {
+  font-size: 15px;
+  color: var(--off-black);
+}
+
+.free-trial-text span {
+  color: var(--mid);
+  font-size: 14px;
+}
+
+.free-trial-cta {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-mid);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.free-trial-cta:hover { color: var(--black); }
+
 .tiers-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-top: 56px;
 }
 
 .tier-card {
@@ -546,43 +955,6 @@ section { padding: 100px 40px; }
   font-style: italic;
 }
 
-/* ── USE CASES ── */
-#usecases {
-  background: var(--bg);
-}
-
-.cases-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-top: 56px;
-}
-
-.case-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 30px;
-}
-
-.case-q {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--black);
-  margin-bottom: 10px;
-  letter-spacing: -0.01em;
-  font-style: italic;
-}
-
-.case-q::before { content: '"'; }
-.case-q::after { content: '"'; }
-
-.case-a {
-  font-size: 14px;
-  color: var(--mid);
-  line-height: 1.65;
-}
-
 /* ── CTA ── */
 #cta {
   background: var(--off-black);
@@ -641,6 +1013,12 @@ footer {
 .footer-contact a:hover { color: var(--white); }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .sample-input-row { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 768px) {
   nav { padding: 0 20px; }
   nav .nav-links li:not(:last-child) { display: none; }
@@ -654,6 +1032,9 @@ footer {
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .cases-grid { grid-template-columns: 1fr; }
   .hero-stats { gap: 32px; }
+  .free-trial-banner { flex-direction: column; align-items: flex-start; }
+  .sample-response { padding: 28px 24px; }
+  .sample-input { padding: 24px; }
 
   footer { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
 }
@@ -675,29 +1056,65 @@ footer {
 <!-- HERO -->
 <section id="hero">
   <div class="container">
-    <div class="hero-eyebrow">Fractional SaaS Advisory · AI-powered</div>
-    <h1 class="hero-headline">Connecting product, finance,<br>and GTM into one growth system.</h1>
-    <p class="hero-sub">17 years of SaaS operator experience — instantly accessible, powered by AI, and backed by a human when it counts.</p>
-    <div class="hero-actions">
-      <a href="#tiers" class="btn-primary">See how it works</a>
-      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary">Talk to Jon →</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <div class="hero-stat-num">17+</div>
-        <div class="hero-stat-label">Years in SaaS, from $25M to $1B ARR</div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-eyebrow">Fractional SaaS Advisory · AI-powered</div>
+        <h1 class="hero-headline">Connecting product, finance,<br>and GTM into one growth system.</h1>
+        <p class="hero-sub">17 years of SaaS operator experience — instantly accessible, powered by AI, and backed by a human when it counts.</p>
+        <div class="hero-actions">
+          <a href="#tiers" class="btn-primary">See how it works</a>
+          <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary">Talk to Jon →</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">17+</div>
+            <div class="hero-stat-label">Years in SaaS, from $25M to $1B ARR</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">3</div>
+            <div class="hero-stat-label">Engagement tiers — self-serve to embedded</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">24h</div>
+            <div class="hero-stat-label">Response time on flagged questions</div>
+          </div>
+        </div>
       </div>
-      <div>
-        <div class="hero-stat-num">3</div>
-        <div class="hero-stat-label">Engagement tiers — from self-serve to embedded operator</div>
-      </div>
-      <div>
-        <div class="hero-stat-num">$0</div>
-        <div class="hero-stat-label">Overhead vs. a full-time VP hire</div>
-      </div>
-      <div>
-        <div class="hero-stat-num">24h</div>
-        <div class="hero-stat-label">Response time on flagged questions</div>
+
+      <!-- BOT UI MOCKUP -->
+      <div class="hero-visual">
+        <div class="bot-preview">
+          <div class="bot-preview-bar">
+            <div class="bot-preview-title">Borthwick Advisory <span>/ Strategy Q&amp;A</span></div>
+            <div class="bot-preview-access">Advisory Access</div>
+          </div>
+          <div class="bot-preview-body">
+            <div class="bot-preview-label">Company Context <span style="color:var(--faint);font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">optional but improves answers</span></div>
+            <div class="bot-preview-field">We sell indie games — 100+ titles, 3,000 subs at $5/month.</div>
+            <div class="bot-preview-label">Your Question</div>
+            <div class="bot-preview-field">How can we double size in the next 12 months?</div>
+            <div class="bot-preview-chips">
+              <div class="bot-preview-chip">How do I price a freemium tier?</div>
+              <div class="bot-preview-chip">Moving upmarket — GTM changes?</div>
+              <div class="bot-preview-chip">Board narrative around ARR expansion?</div>
+            </div>
+            <div class="bot-preview-submit">
+              <div class="bot-preview-btn">Get answer</div>
+              <div class="bot-preview-hint">Responses in ~10 seconds</div>
+            </div>
+            <div class="bot-preview-divider"></div>
+            <div class="bot-preview-response">
+              <div class="bot-preview-response-header">
+                <div class="bot-preview-response-label">Advisory Response</div>
+              </div>
+              <div class="bot-preview-section-head">Context</div>
+              <div class="bot-preview-text">You're running a subscription gaming bundle — think Humble Choice or Xbox Game Pass Indie tier — and the question is really about which growth levers matter most at 3,000 subscribers before you burn money on the wrong ones.</div>
+              <div class="bot-preview-section-head">The Answer</div>
+              <div class="bot-preview-text">At 3,000 subs and $5/month, you're at ~$180K ARR. Doubling means getting to 6,000 subs or finding ways to expand revenue per subscriber — ideally both. Fix retention first, then add annual plans, then launch a referral loop...</div>
+            </div>
+            <div class="bot-preview-fade"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -792,12 +1209,101 @@ footer {
   </div>
 </section>
 
+<!-- SAMPLE OUTPUT -->
+<section id="sample">
+  <div class="container">
+    <div class="section-label">See It In Action</div>
+    <h2 class="section-title">A real question. A real answer.</h2>
+    <p class="section-sub">This is actual output from the advisory — unedited. The question came from an indie gaming subscription company with 3,000 subscribers.</p>
+
+    <div class="sample-wrap">
+      <div class="sample-input">
+        <div class="sample-input-row">
+          <div>
+            <div class="sample-field-label">Company Context <span class="sample-field-hint">Optional but improves answers</span></div>
+            <div class="sample-field-value">We sell indie games — over 100 titles, 3,000 subscribers, $5/month.</div>
+          </div>
+          <div>
+            <div class="sample-field-label">The Question</div>
+            <div class="sample-field-value">How can we double size in the next 12 months?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sample-response">
+        <div class="sample-response-header">
+          <div class="sample-response-label">Advisory Response</div>
+          <div class="sample-response-actions">
+            <span class="sample-action-btn">Copy</span>
+            <span class="sample-action-btn">New question</span>
+          </div>
+        </div>
+
+        <div class="sample-section">
+          <div class="sample-section-head">Context</div>
+          <div class="sample-section-body">You're running a subscription gaming bundle — think Humble Choice or Xbox Game Pass Indie tier — and the question is really about which growth levers matter most at 3,000 subscribers before you burn money on the wrong ones.</div>
+        </div>
+
+        <div class="sample-section">
+          <div class="sample-section-head">The Answer</div>
+          <div class="sample-section-body">
+            <p style="margin-bottom:18px;">At 3,000 subs and $5/month, you're at ~$180K ARR. Doubling means getting to 6,000 subs or finding ways to expand revenue per subscriber — ideally both. Here's how I'd prioritize:</p>
+
+            <div class="sample-point">
+              <div class="sample-point-head">1. Fix retention before pouring water into a leaky bucket</div>
+              <div class="sample-point-body">Before any acquisition spend, know your monthly churn rate. At this scale, even 8% monthly churn means you're replacing nearly your entire subscriber base every year just to stay flat. Target under 5% monthly. Retention is your growth multiplier — every point you save compounds.</div>
+            </div>
+
+            <div class="sample-point">
+              <div class="sample-point-head">2. Add a second price point — annual plans</div>
+              <div class="sample-point-body">Offer an annual plan at $45–48/year (20–25% discount). This does three things: drops monthly churn to near zero for that cohort, pulls cash forward, and signals commitment from your best customers. Even if only 20% of new subs take annual, your blended churn profile improves materially. This is the single highest-ROI pricing move at your stage.</div>
+            </div>
+
+            <div class="sample-point">
+              <div class="sample-point-head">3. Launch a referral loop</div>
+              <div class="sample-point-body">Your existing 3,000 subs are your cheapest acquisition channel and you're almost certainly not using them. Give subscribers a unique link — one free month for them, first month free or discounted for the referred friend. Gaming audiences are tribal. A 10% referral conversion rate on your base generates 300 new subs with near-zero CAC.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sample-section">
+          <div class="sample-section-head">Priority Order for Next 90 Days</div>
+          <div class="sample-priority">1. Know your churn rate &nbsp;·&nbsp; 2. Launch annual plans &nbsp;·&nbsp; 3. Launch referral program &nbsp;·&nbsp; 4. Test one distribution partnership</div>
+        </div>
+
+        <div class="sample-section">
+          <div class="sample-section-head">One Thing to Pressure-Test</div>
+          <div class="sample-section-body">Do you have licensing rights that allow you to bundle and distribute these 100+ games in a subscription model, and are those rights exclusive enough to defend against a larger player replicating your catalog? Your catalog relationships are your moat; make sure they're contractually solid before you scale acquisition aggressively.</div>
+        </div>
+
+        <div class="sample-sign">— Borthwick Advisory</div>
+
+        <div class="sample-flag">
+          <span class="sample-flag-btn">⚑ Flag for Jon's review</span>
+          <span class="sample-flag-note">Complex or high-stakes? Jon will respond within 24 hours.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- TIERS -->
 <section id="tiers">
   <div class="container">
     <div class="section-label">Pricing</div>
     <h2 class="section-title">Start instantly. Escalate when you need to.</h2>
     <p class="section-sub">Three tiers — built around how much direct access to Jon your situation actually requires.</p>
+
+    <div class="free-trial-banner">
+      <div class="free-trial-left">
+        <span class="free-trial-badge">Free</span>
+        <div class="free-trial-text">
+          Try one question, no account required. <span>See the quality before you commit.</span>
+        </div>
+      </div>
+      <a href="https://borthwick-advisor-bot.netlify.app" class="free-trial-cta">Ask a free question →</a>
+    </div>
+
     <div class="tiers-grid">
 
       <div class="tier-card">
@@ -901,7 +1407,7 @@ footer {
 <section id="cta">
   <div class="container-narrow">
     <h2 class="section-title">The question you can't get a straight answer on — ask it.</h2>
-    <p class="section-sub">Start with Self-Serve and get an operator's answer in seconds. Or book a call with Jon directly if you want to talk through the right fit.</p>
+    <p class="section-sub">Start with a free question and see the quality. Or subscribe and get an operator's answer on everything.</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
       <a href="https://borthwick-advisor-bot.netlify.app" class="btn-primary">Try the advisory →</a>
       <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary" style="color:var(--faint)">Talk to Jon directly</a>
