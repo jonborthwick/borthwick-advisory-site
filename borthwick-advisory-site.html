@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borthwick Advisory — SaaS Pricing & GTM Strategy</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0f0f0e;
+  --off-black: #1c1b19;
+  --dark: #2a2927;
+  --mid: #5c5a56;
+  --muted: #8c8a85;
+  --faint: #c4c1bb;
+  --border: #e6e3dd;
+  --bg: #faf9f6;
+  --white: #ffffff;
+  --accent: #1a3a5c;
+  --accent-light: #e8eef5;
+  --accent-mid: #2e5f96;
+  --warm: #8b5e3c;
+  --warm-light: #f5ede5;
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--off-black);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(250, 249, 246, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.nav-logo span { color: var(--muted); font-weight: 400; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 14px;
+  color: var(--mid);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.nav-links a:hover { color: var(--black); }
+
+.nav-cta {
+  padding: 8px 18px;
+  background: var(--black);
+  color: var(--white) !important;
+  border-radius: 6px;
+  font-size: 13px !important;
+  font-weight: 500;
+  transition: background 0.15s !important;
+}
+
+.nav-cta:hover { background: var(--dark) !important; color: var(--white) !important; }
+
+/* ── SECTIONS ── */
+section { padding: 100px 40px; }
+
+.container {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.container-narrow {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ── HERO ── */
+#hero {
+  padding-top: 160px;
+  padding-bottom: 120px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 24px;
+}
+
+.hero-headline {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--black);
+  letter-spacing: -0.02em;
+  margin-bottom: 28px;
+  max-width: 780px;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--mid);
+  line-height: 1.7;
+  max-width: 580px;
+  margin-bottom: 44px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 14px 28px;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s;
+  letter-spacing: -0.01em;
+}
+
+.btn-primary:hover { background: var(--dark); }
+
+.btn-secondary {
+  display: inline-block;
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--mid);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.btn-secondary:hover { color: var(--black); }
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 72px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.hero-stat-num {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 400;
+  color: var(--black);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.hero-stat-label {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+  max-width: 160px;
+}
+
+/* ── HOW IT WORKS ── */
+#how {
+  background: var(--bg);
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-mid);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 400;
+  color: var(--black);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 17px;
+  color: var(--mid);
+  line-height: 1.7;
+  max-width: 560px;
+  margin-bottom: 64px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.step {
+  position: relative;
+}
+
+.step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  color: var(--accent-mid);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.step-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
+.step-body {
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.65;
+}
+
+/* ── THE GAP ── */
+#gap {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.gap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 56px;
+}
+
+.gap-side {
+  background: var(--white);
+  padding: 40px;
+}
+
+.gap-side-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gap-bad .gap-side-label { color: var(--muted); }
+.gap-good .gap-side-label { color: var(--accent-mid); }
+
+.gap-indicator {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.gap-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gap-items li {
+  font-size: 15px;
+  color: var(--off-black);
+  padding-left: 22px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.gap-bad .gap-items li::before {
+  content: '×';
+  position: absolute;
+  left: 0;
+  color: var(--faint);
+  font-weight: 600;
+}
+
+.gap-good .gap-items li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent-mid);
+  font-weight: 500;
+}
+
+/* ── TIERS ── */
+#tiers {
+  background: var(--bg);
+}
+
+.tiers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.tier-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px 32px;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+
+.tier-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+}
+
+.tier-card.featured {
+  border-color: var(--accent-mid);
+  box-shadow: 0 0 0 1px var(--accent-mid);
+}
+
+.tier-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-mid);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.tier-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.tier-price {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 400;
+  color: var(--black);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.tier-price-note {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.tier-desc {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tier-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.tier-features li {
+  font-size: 14px;
+  color: var(--off-black);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.tier-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent-mid);
+  font-size: 12px;
+  font-weight: 700;
+  top: 2px;
+}
+
+.tier-cta {
+  display: block;
+  text-align: center;
+  padding: 11px 20px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.tier-cta-primary {
+  background: var(--black);
+  color: var(--white);
+}
+
+.tier-cta-primary:hover { background: var(--dark); }
+
+.tier-cta-secondary {
+  background: var(--bg);
+  color: var(--off-black);
+  border: 1px solid var(--border);
+}
+
+.tier-cta-secondary:hover { border-color: var(--faint); background: var(--white); }
+
+.tier-coming {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ── ABOUT ── */
+#about {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-body p {
+  font-size: 16px;
+  color: var(--mid);
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+
+.about-body p:last-child { margin-bottom: 0; }
+
+.about-body strong { color: var(--off-black); font-weight: 600; }
+
+.about-roles {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.role-item {
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.role-item:last-child { border-bottom: none; }
+
+.role-company {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+  letter-spacing: -0.01em;
+}
+
+.role-title {
+  font-size: 13px;
+  color: var(--mid);
+}
+
+.role-note {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── USE CASES ── */
+#usecases {
+  background: var(--bg);
+}
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.case-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.case-q {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+  font-style: italic;
+}
+
+.case-q::before { content: '"'; }
+.case-q::after { content: '"'; }
+
+.case-a {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.65;
+}
+
+/* ── CTA ── */
+#cta {
+  background: var(--off-black);
+  padding: 120px 40px;
+  text-align: center;
+}
+
+#cta .section-title {
+  color: var(--white);
+  margin-bottom: 20px;
+  font-size: clamp(28px, 3.5vw, 44px);
+}
+
+#cta .section-sub {
+  color: var(--faint);
+  margin: 0 auto 48px;
+}
+
+.cta-note {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 16px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-brand {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.footer-brand strong {
+  color: var(--faint);
+  font-weight: 600;
+}
+
+.footer-contact {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer-contact a {
+  color: var(--faint);
+  text-decoration: none;
+}
+
+.footer-contact a:hover { color: var(--white); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  nav .nav-links li:not(:last-child) { display: none; }
+
+  section { padding: 70px 24px; }
+  #hero { padding: 120px 24px 80px; }
+
+  .steps { grid-template-columns: 1fr; gap: 32px; }
+  .gap-grid { grid-template-columns: 1fr; }
+  .tiers-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 32px; }
+
+  footer { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Borthwick Advisory <span>/ SaaS Strategy</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#tiers">Pricing</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="https://borthwick-advisor-bot.netlify.app" class="nav-cta">Try the advisory</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Fractional SaaS Advisory · AI-powered</div>
+    <h1 class="hero-headline">Connecting product, finance,<br>and GTM into one growth system.</h1>
+    <p class="hero-sub">17 years of SaaS operator experience — instantly accessible, powered by AI, and backed by a human when it counts.</p>
+    <div class="hero-actions">
+      <a href="#tiers" class="btn-primary">See how it works</a>
+      <a href="mailto:jonborthwick@gmail.com" class="btn-secondary">Talk to Jon →</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">17+</div>
+        <div class="hero-stat-label">Years in SaaS, from $25M to $1B ARR</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">Engagement tiers — from self-serve to embedded operator</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">$0</div>
+        <div class="hero-stat-label">Overhead vs. a full-time VP hire</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">24h</div>
+        <div class="hero-stat-label">Response time on flagged questions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAP -->
+<section id="gap">
+  <div class="container">
+    <div class="section-label">The Problem</div>
+    <h2 class="section-title">Growth-stage SaaS is stuck<br>between two bad options.</h2>
+    <div class="gap-grid">
+      <div class="gap-side gap-bad">
+        <div class="gap-side-label">
+          <div class="gap-indicator"></div>
+          The alternatives
+        </div>
+        <ul class="gap-items">
+          <li>Junior consultants produce frameworks, not decisions</li>
+          <li>Full-time VP hires cost $250K+ and take 6 months to ramp</li>
+          <li>Agencies are generalists — not SaaS pricing operators</li>
+          <li>AI tools have no institutional knowledge of your market</li>
+          <li>Board decks don't connect to operational reality</li>
+        </ul>
+      </div>
+      <div class="gap-side gap-good">
+        <div class="gap-side-label">
+          <div class="gap-indicator"></div>
+          Borthwick Advisory
+        </div>
+        <ul class="gap-items">
+          <li>17 years of SaaS operator experience baked into every answer</li>
+          <li>Available instantly — no hiring process, no ramp time</li>
+          <li>Specific, quantified answers built for actual use</li>
+          <li>Complex questions escalated to Jon directly — reviewed within 24 hours</li>
+          <li>Pricing, GTM, and board narrative in one relationship</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Ask anything. Get an operator's answer.</h2>
+    <p class="section-sub">The advisory is powered by AI trained on 17+ years of SaaS pricing, GTM, and product strategy — with Jon in the loop on what matters.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Ask your question</div>
+        <div class="step-body">Type in any pricing, GTM, or strategy question — packaging decisions, competitive positioning, board prep, segmentation. No scheduling, no waiting.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Get an operator's answer</div>
+        <div class="step-body">The AI draws on Jon's SaaS experience — LogMeIn at scale, Cordance acquisitions, Rapid7 commercial strategy — to give you a specific, actionable response. Not a framework. An answer.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Jon reviews what matters</div>
+        <div class="step-body">Complex or high-stakes questions get flagged for Jon's personal review. He looks at them daily and sends back a direct answer — often within a few hours. You're never just talking to a bot on the hard stuff.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="usecases">
+  <div class="container">
+    <div class="section-label">What People Ask</div>
+    <h2 class="section-title">Real questions. Operator answers.</h2>
+    <p class="section-sub">The kinds of questions growth-stage SaaS teams face every week — and can't get a straight answer on.</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-q">We're thinking about adding a usage-based tier. How do we price it without cannibalizing our seat-based customers?</div>
+        <div class="case-a">Instantly surfaced from Jon's experience running hybrid pricing at LogMeIn and Cordance — with specific guardrails on floor pricing and grandfathering logic.</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">Our board wants a competitive moat slide. We have real differentiation but can't articulate it without sounding generic.</div>
+        <div class="case-a">Worked through interactively, with Jon's direct feedback on board narrative that connects to financial outcomes — not just product features.</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">We're entering enterprise. What changes in the GTM motion when we go upmarket from SMB?</div>
+        <div class="case-a">A detailed answer from operator experience — not a "land and expand" slide deck. Specific guidance on champion identification, procurement cycles, and proof-of-concept structure.</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">We just got acquired. How do we protect our pricing during integration without losing customers?</div>
+        <div class="case-a">Jon led pricing through 10 acquisitions at Cordance ($0 to $40M ARR in 18 months). This is exactly the kind of question that gets escalated to him directly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIERS -->
+<section id="tiers">
+  <div class="container">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Start instantly. Escalate when you need to.</h2>
+    <p class="section-sub">Three tiers — built around how much direct access to Jon your situation actually requires.</p>
+    <div class="tiers-grid">
+
+      <div class="tier-card">
+        <div class="tier-name">Self-Serve</div>
+        <div class="tier-price">$149<span style="font-size:20px;font-family:var(--sans);letter-spacing:0">/mo</span></div>
+        <div class="tier-price-note">Cancel anytime</div>
+        <div class="tier-desc">Unlimited access to the AI-powered advisory, trained on Jon's SaaS experience. Instant answers on pricing, GTM, and strategy — no scheduling required.</div>
+        <ul class="tier-features">
+          <li>Unlimited questions via the advisory interface</li>
+          <li>AI answers trained on 17+ years of SaaS operator experience</li>
+          <li>Pricing, GTM, segmentation, board narrative</li>
+          <li>Response in seconds, not days</li>
+          <li>Cancel anytime, no commitment</li>
+        </ul>
+        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-secondary">Get started</a>
+      </div>
+
+      <div class="tier-card featured">
+        <div class="tier-badge">Most popular</div>
+        <div class="tier-name">Guided</div>
+        <div class="tier-price">$499<span style="font-size:20px;font-family:var(--sans);letter-spacing:0">/mo</span></div>
+        <div class="tier-price-note">Month-to-month</div>
+        <div class="tier-desc">Everything in Self-Serve, plus your most complex and high-stakes questions get flagged for Jon's personal review — answered directly within 24 hours.</div>
+        <ul class="tier-features">
+          <li>Everything in Self-Serve</li>
+          <li>Complex questions flagged to Jon automatically</li>
+          <li>Jon's personal responses within 24 hours</li>
+          <li>Monthly 30-min strategy call</li>
+          <li>Direct email access for urgent issues</li>
+        </ul>
+        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-primary">Get started</a>
+      </div>
+
+      <div class="tier-card">
+        <div class="tier-name">Embedded</div>
+        <div class="tier-price" style="font-size:28px;padding-top:6px;">By application</div>
+        <div class="tier-price-note">Limited availability</div>
+        <div class="tier-desc">Jon embedded as a fractional operator — CMO, CPO, Head of Pricing, or VP Strategy. For companies that need an operator in the room, not just an advisor in their inbox.</div>
+        <ul class="tier-features">
+          <li>Everything in Guided</li>
+          <li>Jon's direct time — 2 to 3 days per week</li>
+          <li>Full team and stakeholder access</li>
+          <li>Board and exec prep included</li>
+          <li>3-month minimum, structured handoff</li>
+        </ul>
+        <a href="mailto:jonborthwick@gmail.com?subject=Embedded%20Engagement" class="tier-cta tier-cta-secondary">Book a discovery call</a>
+        <div class="tier-coming">Limited slots — currently waitlisting</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">About</div>
+        <h2 class="section-title">The connective tissue<br>between functions.</h2>
+        <div class="about-body" style="margin-top:24px;">
+          <p>Jon Borthwick has spent 17+ years inside high-growth SaaS companies — not advising from the outside, but running pricing, GTM, and commercial strategy as a senior operator. His edge is the connective tissue between functions: turning product, finance, and go-to-market into a unified growth system.</p>
+          <p>At <strong>LogMeIn</strong>, he spent 13 years scaling from $25M to $1B ARR — leading pricing strategy on the GoTo merger (tripling ARR overnight), driving the $125M LastPass acquisition, and growing LastPass ARR from $12M to $40M post-close. At <strong>Cordance</strong>, he was Employee #4 — building the commercial model for a PE-backed SaaS roll-up that went from $0 to $40M ARR in 18 months across 10 acquisitions, including migrating an entire portfolio from perpetual licenses to SaaS. At <strong>Rapid7</strong>, he led monetization strategy, platform packaging, and ARR uplift for a publicly traded MDR provider.</p>
+          <p>The advisory is built on that experience — compressed into an AI that can answer most questions instantly, with Jon in the loop on everything that actually matters.</p>
+        </div>
+      </div>
+      <div>
+        <div class="about-roles">
+          <div class="role-item">
+            <div class="role-company">Progress Software</div>
+            <div class="role-title">Director, Pricing Strategy</div>
+            <div class="role-note">Current · Publicly traded infrastructure SaaS</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Rapid7</div>
+            <div class="role-title">Sr. Director, Commercial Strategy</div>
+            <div class="role-note">Publicly traded MDR &amp; cybersecurity</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Cordance</div>
+            <div class="role-title">VP Pricing &amp; Product Marketing</div>
+            <div class="role-note">Employee #4 · $0 → $40M ARR · 10 acquisitions</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">LogMeIn</div>
+            <div class="role-title">VP Business Strategy & Operations</div>
+            <div class="role-note">13 years · $25M → $1B ARR · LastPass acquisition · GoTo merger</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Toast</div>
+            <div class="role-title">Independent Pricing Advisor</div>
+            <div class="role-note">Growth-stage SaaS advisory</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container-narrow">
+    <h2 class="section-title">The question you can't get a straight answer on — ask it.</h2>
+    <p class="section-sub">Start with Self-Serve and get an operator's answer in seconds. Or book a call with Jon directly if you want to talk through the right fit.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-primary">Try the advisory →</a>
+      <a href="mailto:jonborthwick@gmail.com?subject=Discovery%20Call" class="btn-secondary" style="color:var(--faint)">Talk to Jon directly</a>
+    </div>
+    <div class="cta-note">jonborthwick@gmail.com · Boston, MA · borthwickadvisory.com</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand"><strong>Borthwick Advisory</strong> · Fractional Executive &amp; Strategy Advisory for Growth-Stage SaaS</div>
+  <div class="footer-contact">
+    <a href="mailto:jonborthwick@gmail.com">jonborthwick@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
