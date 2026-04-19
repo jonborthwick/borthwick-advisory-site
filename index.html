@@ -1098,7 +1098,7 @@ footer {
     <li><a href="#how">How it works</a></li>
     <li><a href="#tiers">Pricing</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="https://app.borthwickadvisory.com" class="nav-cta">Try the advisory</a></li>
+    <li><a href="https://borthwick-advisor-bot.netlify.app" class="nav-cta">Try the advisory</a></li>
   </ul>
   <div class="lang-switcher">
     <button class="lang-current" onclick="this.parentElement.classList.toggle('open')">EN ▾</button>
@@ -1124,7 +1124,7 @@ Sub: "Ask any pricing or GTM question. Connected pulls live from Salesforce — 
 Eyebrow: "SaaS Advisory · AI-powered · Salesforce-connected"
 Stats: "17+" (years SaaS) / "$2,499/mo" (Connected tier) / "<10s" (answer time)
 CTA primary: "Join the Connected waitlist →" href="#connected-waitlist"
-CTA secondary: "Try the free advisory" href="https://app.borthwickadvisory.com"
+CTA secondary: "Try the free advisory" href="https://borthwick-advisor-bot.netlify.app"
 -->
 <!-- HERO -->
 <section id="hero">
@@ -1136,7 +1136,7 @@ CTA secondary: "Try the free advisory" href="https://app.borthwickadvisory.com"
         <p class="hero-sub">17 years of SaaS operator experience — instantly accessible, powered by AI, and backed by a human when it counts.</p>
         <div class="hero-actions">
           <a href="#tiers" class="btn-primary">See how it works</a>
-          <a href="https://app.borthwickadvisory.com" class="btn-secondary">Talk to Jon →</a>
+          <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary">Talk to Jon →</a>
         </div>
         <div class="hero-stats">
           <div>
@@ -1389,7 +1389,7 @@ CTA secondary: "Try the free advisory" href="https://app.borthwickadvisory.com"
           Try one question, no account required. <span>See the quality before you commit.</span>
         </div>
       </div>
-      <a href="https://app.borthwickadvisory.com" class="free-trial-cta">Ask a free question →</a>
+      <a href="https://borthwick-advisor-bot.netlify.app" class="free-trial-cta">Ask a free question →</a>
     </div>
 
     <div class="tiers-grid">
@@ -1618,8 +1618,8 @@ CTA secondary: "Try the free advisory" href="https://app.borthwickadvisory.com"
     <h2 class="section-title">The question you can't get a straight answer on — ask it.</h2>
     <p class="section-sub">Start with a free question and see the quality. Or subscribe and get an operator's answer on everything.</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-      <a href="https://app.borthwickadvisory.com" class="btn-primary">Try the advisory →</a>
-      <a href="https://app.borthwickadvisory.com" class="btn-secondary" style="color:var(--faint)">Talk to Jon directly</a>
+      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-primary">Try the advisory →</a>
+      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary" style="color:var(--faint)">Talk to Jon directly</a>
     </div>
     <div class="cta-note">jonborthwick@gmail.com · Boston, MA · borthwickadvisory.com</div>
   </div>
@@ -1652,7 +1652,7 @@ async function submitConnectedWaitlist() {
   btn.disabled = true;
   btn.textContent = 'Submitting...';
   try {
-    await fetch('https://app.borthwickadvisory.com/.netlify/functions/notify-connected-waitlist', {
+    await fetch('https://borthwick-advisor-bot.netlify.app/.netlify/functions/notify-connected-waitlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, orgSize }),
@@ -1669,7 +1669,7 @@ async function submitEmbeddedWaitlist() {
   btn.disabled = true;
   btn.textContent = 'Submitting...';
   try {
-    await fetch('https://app.borthwickadvisory.com/.netlify/functions/notify-embedded-waitlist', {
+    await fetch('https://borthwick-advisor-bot.netlify.app/.netlify/functions/notify-embedded-waitlist', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
