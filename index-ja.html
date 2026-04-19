@@ -24,10 +24,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba
 .nav-links a:hover { color: var(--black); }
 .nav-cta { padding: 8px 18px; background: var(--black); color: var(--white) !important; border-radius: 6px; font-size: 13px !important; font-weight: 500; transition: background 0.15s !important; }
 .nav-cta:hover { background: var(--dark) !important; }
-.lang-switcher { display: flex; align-items: center; gap: 2px; margin-left: 16px; padding-left: 16px; border-left: 1px solid var(--border); }
-.lang-btn { font-size: 12px; color: var(--faint); text-decoration: none; padding: 3px 7px; border-radius: 4px; transition: color 0.15s; }
-.lang-btn:hover { color: var(--mid); }
-.lang-btn.active { color: var(--mid); font-weight: 600; }
+.lang-switcher { position: relative; margin-left: 16px; padding-left: 16px; border-left: 1px solid var(--border); }
+.lang-current { font-size: 12px; color: var(--mid); background: none; border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-family: inherit; line-height: 1.5; }
+.lang-current:hover { background: var(--bg); }
+.lang-menu { display: none; position: absolute; right: 0; top: calc(100% + 6px); background: var(--white); border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.10); min-width: 120px; z-index: 200; overflow: hidden; }
+.lang-switcher.open .lang-menu { display: block; }
+.lang-menu a { display: block; padding: 8px 14px; font-size: 13px; color: var(--mid); text-decoration: none; transition: background 0.1s; }
+.lang-menu a:hover { background: var(--bg); color: var(--black); }
+.lang-menu a.active { color: var(--black); font-weight: 600; background: var(--accent-light); }
 section { padding: 100px 40px; }
 .container { max-width: 1040px; margin: 0 auto; }
 .container-narrow { max-width: 720px; margin: 0 auto; }
@@ -184,12 +188,18 @@ footer { background: var(--black); padding: 40px; display: flex; align-items: ce
     <li><a href="#how">仕組み</a></li>
     <li><a href="#tiers">料金</a></li>
     <li><a href="#about">について</a></li>
-    <li><a href="https://borthwick-advisor-bot.netlify.app" class="nav-cta">アドバイザリーを試す</a></li>
+    <li><a href="https://app.borthwickadvisory.com" class="nav-cta">アドバイザリーを試す</a></li>
   </ul>
   <div class="lang-switcher">
-    <a href="/" class="lang-btn">EN</a>
-    <a href="/index-ja" class="lang-btn active">日本語</a>
-    <a href="/index-zh" class="lang-btn">中文</a>
+    <button class="lang-current" onclick="this.parentElement.classList.toggle('open')">JA ▾</button>
+    <div class="lang-menu">
+      <a href="/">English</a>
+      <a href="/index-es">Español</a>
+      <a href="/index-de">Deutsch</a>
+      <a href="/index-hi">हिंदी</a>
+      <a href="/index-ja" class="active">日本語</a>
+      <a href="/index-zh">中文</a>
+    </div>
   </div>
 </nav>
 
@@ -202,7 +212,7 @@ footer { background: var(--black); padding: 40px; display: flex; align-items: ce
         <p class="hero-sub">17年のSaaSオペレーター経験 — AIによって即座にアクセス可能、重要な場面では人間がバックアップ。</p>
         <div class="hero-actions">
           <a href="#tiers" class="btn-primary">仕組みを見る</a>
-          <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary">Jonに質問する →</a>
+          <a href="https://app.borthwickadvisory.com" class="btn-secondary">Jonに質問する →</a>
         </div>
         <div class="hero-stats">
           <div>
@@ -414,7 +424,7 @@ footer { background: var(--black); padding: 40px; display: flex; align-items: ce
           1つの質問を無料でお試しください。アカウント不要。 <span>コミットする前に品質をご確認ください。</span>
         </div>
       </div>
-      <a href="https://borthwick-advisor-bot.netlify.app" class="free-trial-cta">無料で質問する →</a>
+      <a href="https://app.borthwickadvisory.com" class="free-trial-cta">無料で質問する →</a>
     </div>
     <div class="tiers-grid">
       <div class="tier-card">
@@ -429,7 +439,7 @@ footer { background: var(--black); padding: 40px; display: flex; align-items: ce
           <li>数日ではなく数秒で回答</li>
           <li>いつでもキャンセル可、コミットメント不要</li>
         </ul>
-        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-secondary">始める</a>
+        <a href="https://app.borthwickadvisory.com" class="tier-cta tier-cta-secondary">始める</a>
       </div>
       <div class="tier-card featured">
         <div class="tier-badge">最も人気</div>
@@ -444,7 +454,7 @@ footer { background: var(--black); padding: 40px; display: flex; align-items: ce
           <li>月次30分戦略コール</li>
           <li>緊急事項への直接メールアクセス</li>
         </ul>
-        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-primary">始める</a>
+        <a href="https://app.borthwickadvisory.com" class="tier-cta tier-cta-primary">始める</a>
       </div>
       <div class="tier-card">
         <div class="tier-name">エンベデッド</div>
@@ -458,7 +468,7 @@ footer { background: var(--black); padding: 40px; display: flex; align-items: ce
           <li>取締役会および経営幹部準備を含む</li>
           <li>最低3ヶ月、構造化されたハンドオフ</li>
         </ul>
-        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-secondary">ディスカバリーコールを予約</a>
+        <a href="https://app.borthwickadvisory.com" class="tier-cta tier-cta-secondary">ディスカバリーコールを予約</a>
         <div class="tier-coming">枠数限定 — 現在ウェイトリスト受付中</div>
       </div>
     </div>
@@ -515,8 +525,8 @@ footer { background: var(--black); padding: 40px; display: flex; align-items: ce
     <h2 class="section-title">明確な答えが得られない質問 — ここで聞いてください。</h2>
     <p class="section-sub">無料の質問から始めて、品質を確認してください。またはサブスクリプションで、すべてについてオペレーターの回答を取得してください。</p>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-primary">アドバイザリーを試す →</a>
-      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary" style="color:var(--faint)">Jonに直接相談する</a>
+      <a href="https://app.borthwickadvisory.com" class="btn-primary">アドバイザリーを試す →</a>
+      <a href="https://app.borthwickadvisory.com" class="btn-secondary" style="color:var(--faint)">Jonに直接相談する</a>
     </div>
     <div class="cta-note">jonborthwick@gmail.com · Boston, MA · borthwickadvisory.com</div>
   </div>
@@ -527,5 +537,12 @@ footer { background: var(--black); padding: 40px; display: flex; align-items: ce
   <div class="footer-contact"><a href="mailto:jonborthwick@gmail.com">jonborthwick@gmail.com</a></div>
 </footer>
 
+<script>
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-switcher')) {
+    document.querySelectorAll('.lang-switcher.open').forEach(function(el) { el.classList.remove('open'); });
+  }
+});
+</script>
 </body>
 </html>

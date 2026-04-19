@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borthwick Advisory — SaaS प्राइसिंग और GTM रणनीति</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0f0f0e; --off-black: #1c1b19; --dark: #2a2927; --mid: #5c5a56;
+  --muted: #8c8a85; --faint: #c4c1bb; --border: #e6e3dd; --bg: #faf9f6;
+  --white: #ffffff; --accent: #1a3a5c; --accent-light: #e8eef5; --accent-mid: #2e5f96;
+  --warm: #8b5e3c; --warm-light: #f5ede5;
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --sans: 'Noto Sans Devanagari', 'Mangal', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--off-black); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,249,246,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-size: 15px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+.nav-logo span { color: var(--muted); font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { font-size: 14px; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--black); }
+.nav-cta { padding: 8px 18px; background: var(--black); color: var(--white) !important; border-radius: 6px; font-size: 13px !important; font-weight: 500; transition: background 0.15s !important; }
+.nav-cta:hover { background: var(--dark) !important; color: var(--white) !important; }
+.lang-switcher { position: relative; margin-left: 16px; padding-left: 16px; border-left: 1px solid var(--border); }
+.lang-current { font-size: 12px; color: var(--mid); background: none; border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-family: inherit; line-height: 1.5; }
+.lang-current:hover { background: var(--bg); }
+.lang-menu { display: none; position: absolute; right: 0; top: calc(100% + 6px); background: var(--white); border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.10); min-width: 120px; z-index: 200; overflow: hidden; }
+.lang-switcher.open .lang-menu { display: block; }
+.lang-menu a { display: block; padding: 8px 14px; font-size: 13px; color: var(--mid); text-decoration: none; transition: background 0.1s; }
+.lang-menu a:hover { background: var(--bg); color: var(--black); }
+.lang-menu a.active { color: var(--black); font-weight: 600; background: var(--accent-light); }
+section { padding: 100px 40px; }
+.container { max-width: 1040px; margin: 0 auto; }
+.container-narrow { max-width: 720px; margin: 0 auto; }
+#hero { padding-top: 140px; padding-bottom: 100px; background: var(--white); border-bottom: 1px solid var(--border); }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.hero-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 24px; }
+.hero-headline { font-family: var(--serif); font-size: clamp(28px, 3.5vw, 46px); font-weight: 400; line-height: 1.35; color: var(--black); letter-spacing: -0.01em; margin-bottom: 28px; }
+.hero-sub { font-size: 17px; color: var(--mid); line-height: 1.75; margin-bottom: 40px; }
+.hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.btn-primary { display: inline-block; padding: 14px 28px; background: var(--black); color: var(--white); border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; transition: background 0.15s; }
+.btn-primary:hover { background: var(--dark); }
+.btn-secondary { display: inline-block; padding: 14px 28px; background: transparent; color: var(--mid); border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; transition: color 0.15s; }
+.btn-secondary:hover { color: var(--black); }
+.hero-stats { display: flex; gap: 40px; margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.hero-stat-num { font-family: -apple-system, BlinkMacSystemFont, Georgia, serif; font-size: 34px; font-weight: 400; color: var(--black); letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
+.hero-stat-label { font-size: 12px; color: var(--muted); line-height: 1.5; max-width: 140px; }
+.bot-preview { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05); }
+.bot-preview-bar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; }
+.bot-preview-title { font-size: 12px; font-weight: 600; color: var(--black); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-title span { color: var(--muted); font-weight: 400; }
+.bot-preview-access { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-body { padding: 20px; }
+.bot-preview-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-field { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--off-black); margin-bottom: 14px; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.bot-preview-chip { font-size: 11px; color: var(--mid); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-submit { display: flex; align-items: center; gap: 10px; }
+.bot-preview-btn { font-size: 13px; font-weight: 500; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 6px; padding: 7px 14px; cursor: default; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-hint { font-size: 12px; color: var(--faint); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-divider { height: 1px; background: var(--border); margin: 16px 0; }
+.bot-preview-response { padding: 0; }
+.bot-preview-response-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.bot-preview-response-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-section-head { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-text { font-size: 12px; color: var(--off-black); line-height: 1.6; margin-bottom: 12px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.bot-preview-fade { height: 40px; background: linear-gradient(to bottom, transparent, var(--white)); margin: -10px -20px 0; }
+#how { background: var(--bg); }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 16px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.section-title { font-family: var(--serif); font-size: clamp(26px, 3vw, 40px); font-weight: 400; color: var(--black); letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 16px; }
+.section-sub { font-size: 17px; color: var(--mid); line-height: 1.7; max-width: 560px; margin-bottom: 64px; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.step { position: relative; }
+.step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--accent-light); color: var(--accent-mid); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.step-title { font-size: 17px; font-weight: 600; color: var(--black); margin-bottom: 10px; }
+.step-body { font-size: 15px; color: var(--mid); line-height: 1.65; }
+#gap { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 56px; }
+.gap-side { background: var(--white); padding: 40px; }
+.gap-side-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.gap-bad .gap-side-label { color: var(--muted); }
+.gap-good .gap-side-label { color: var(--accent-mid); }
+.gap-indicator { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.gap-items { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.gap-items li { font-size: 15px; color: var(--off-black); padding-left: 22px; position: relative; line-height: 1.6; }
+.gap-bad .gap-items li::before { content: '×'; position: absolute; left: 0; color: var(--faint); font-weight: 600; }
+.gap-good .gap-items li::before { content: '→'; position: absolute; left: 0; color: var(--accent-mid); font-weight: 500; }
+#usecases { background: var(--bg); }
+.cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 56px; }
+.case-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 30px; }
+.case-q { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 10px; font-style: italic; }
+.case-q::before { content: '"'; }
+.case-q::after { content: '"'; }
+.case-a { font-size: 14px; color: var(--mid); line-height: 1.65; }
+#sample { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.sample-wrap { margin-top: 48px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.05); }
+.sample-input { background: var(--bg); padding: 32px 40px; border-bottom: 1px solid var(--border); }
+.sample-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.sample-field-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-field-hint { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 10px; color: var(--faint); }
+.sample-field-value { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-size: 14px; color: var(--off-black); line-height: 1.55; font-style: italic; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-response { background: var(--white); padding: 40px; }
+.sample-response-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.sample-response-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-response-actions { display: flex; gap: 8px; }
+.sample-action-btn { font-size: 12px; color: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; text-decoration: none; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-section { margin-bottom: 24px; }
+.sample-section-head { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-section-body { font-size: 15px; color: var(--off-black); line-height: 1.75; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-point { margin-bottom: 18px; }
+.sample-point-head { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--black); margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-point-body { font-size: 14px; color: var(--mid); line-height: 1.7; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-priority { font-size: 14px; color: var(--off-black); line-height: 1.7; background: var(--bg); border-radius: 8px; padding: 14px 16px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-flag { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.sample-flag-btn { font-size: 13px; color: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 7px 14px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-flag-note { font-size: 13px; color: var(--muted); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.sample-sign { font-size: 14px; color: var(--muted); font-style: italic; margin-top: 20px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+#tiers { background: var(--bg); }
+.free-trial-banner { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; margin-top: 48px; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+.free-trial-left { display: flex; align-items: center; gap: 16px; }
+.free-trial-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--accent-light); color: var(--accent-mid); padding: 4px 10px; border-radius: 20px; white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.free-trial-text { font-size: 15px; color: var(--off-black); }
+.free-trial-text span { color: var(--mid); font-size: 14px; }
+.free-trial-cta { font-size: 14px; font-weight: 500; color: var(--accent-mid); text-decoration: none; white-space: nowrap; transition: color 0.15s; }
+.free-trial-cta:hover { color: var(--black); }
+.tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.tier-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 36px 32px; position: relative; transition: box-shadow 0.2s; }
+.tier-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+.tier-card.featured { border-color: var(--accent-mid); box-shadow: 0 0 0 1px var(--accent-mid); }
+.tier-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-mid); color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; white-space: nowrap; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.tier-name { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 12px; }
+.tier-price { font-family: -apple-system, BlinkMacSystemFont, Georgia, serif; font-size: 38px; font-weight: 400; color: var(--black); letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
+.tier-price-note { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.tier-desc { font-size: 14px; color: var(--mid); line-height: 1.65; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+.tier-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.tier-features li { font-size: 14px; color: var(--off-black); padding-left: 20px; position: relative; line-height: 1.5; }
+.tier-features li::before { content: '✓'; position: absolute; left: 0; color: var(--accent-mid); font-size: 12px; font-weight: 700; top: 2px; }
+.tier-cta { display: block; text-align: center; padding: 11px 20px; border-radius: 7px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.15s; }
+.tier-cta-primary { background: var(--black); color: var(--white); }
+.tier-cta-primary:hover { background: var(--dark); }
+.tier-cta-secondary { background: var(--bg); color: var(--off-black); border: 1px solid var(--border); }
+.tier-cta-secondary:hover { border-color: var(--faint); background: var(--white); }
+.tier-coming { font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px; }
+#about { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.about-body p { font-size: 16px; color: var(--mid); line-height: 1.8; margin-bottom: 20px; }
+.about-body p:last-child { margin-bottom: 0; }
+.about-body strong { color: var(--off-black); font-weight: 600; }
+.about-roles { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.role-item { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 3px; }
+.role-item:last-child { border-bottom: none; }
+.role-company { font-size: 14px; font-weight: 600; color: var(--black); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.role-title { font-size: 13px; color: var(--mid); font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.role-note { font-size: 12px; color: var(--muted); font-style: italic; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+#cta { background: var(--off-black); padding: 120px 40px; text-align: center; }
+#cta .section-title { color: var(--white); margin-bottom: 20px; font-size: clamp(26px, 3vw, 42px); }
+#cta .section-sub { color: var(--faint); margin: 0 auto 48px; }
+.cta-note { font-size: 13px; color: var(--muted); margin-top: 16px; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+footer { background: var(--black); padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-brand { font-size: 14px; color: var(--muted); }
+.footer-brand strong { color: var(--faint); font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+.footer-contact { font-size: 13px; color: var(--muted); }
+.footer-contact a { color: var(--faint); text-decoration: none; }
+.footer-contact a:hover { color: var(--white); }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .hero-visual { display: none; } .sample-input-row { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  nav .nav-links li:not(:last-child) { display: none; }
+  section { padding: 70px 24px; }
+  #hero { padding: 120px 24px 80px; }
+  .steps { grid-template-columns: 1fr; gap: 32px; }
+  .gap-grid { grid-template-columns: 1fr; }
+  .tiers-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 32px; }
+  .free-trial-banner { flex-direction: column; align-items: flex-start; }
+  .sample-response { padding: 28px 24px; }
+  .sample-input { padding: 24px; }
+  footer { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">Borthwick Advisory <span>/ SaaS रणनीति</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">यह कैसे काम करता है</a></li>
+    <li><a href="#tiers">मूल्य निर्धारण</a></li>
+    <li><a href="#about">हमारे बारे में</a></li>
+    <li><a href="https://app.borthwickadvisory.com" class="nav-cta">Advisory आज़माएं</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <button class="lang-current" onclick="this.parentElement.classList.toggle('open')">HI ▾</button>
+    <div class="lang-menu">
+      <a href="/">English</a>
+      <a href="/index-es">Español</a>
+      <a href="/index-de">Deutsch</a>
+      <a href="/index-hi" class="active">हिंदी</a>
+      <a href="/index-ja">日本語</a>
+      <a href="/index-zh">中文</a>
+    </div>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-eyebrow">फ्रैक्शनल SaaS Advisory · AI-संचालित</div>
+        <h1 class="hero-headline">प्रोडक्ट, वित्त और GTM को<br>एक विकास प्रणाली में जोड़ना।</h1>
+        <p class="hero-sub">17 साल का SaaS ऑपरेटर अनुभव — तुरंत उपलब्ध, AI द्वारा संचालित, और जब ज़रूरत हो तब इंसान द्वारा समर्थित।</p>
+        <div class="hero-actions">
+          <a href="#tiers" class="btn-primary">यह कैसे काम करता है</a>
+          <a href="https://app.borthwickadvisory.com" class="btn-secondary">Jon से बात करें →</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">17+</div>
+            <div class="hero-stat-label">SaaS में वर्ष, $25M से $1B ARR तक</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">3</div>
+            <div class="hero-stat-label">सेवा स्तर — सेल्फ-सर्व से एम्बेडेड तक</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">24h</div>
+            <div class="hero-stat-label">प्राथमिकता वाले प्रश्नों पर प्रतिक्रिया समय</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="bot-preview">
+          <div class="bot-preview-bar">
+            <div class="bot-preview-title">Borthwick Advisory <span>/ Strategy Q&amp;A</span></div>
+            <div class="bot-preview-access">Advisory Access</div>
+          </div>
+          <div class="bot-preview-body">
+            <div class="bot-preview-label">Company Context <span style="color:var(--faint);font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">optional but improves answers</span></div>
+            <div class="bot-preview-field">We sell indie games — 100+ titles, 3,000 subs at $5/month.</div>
+            <div class="bot-preview-label">Your Question</div>
+            <div class="bot-preview-field">How can we double size in the next 12 months?</div>
+            <div class="bot-preview-chips">
+              <div class="bot-preview-chip">How do I price a freemium tier?</div>
+              <div class="bot-preview-chip">Moving upmarket — GTM changes?</div>
+              <div class="bot-preview-chip">Board narrative around ARR expansion?</div>
+            </div>
+            <div class="bot-preview-submit">
+              <div class="bot-preview-btn">Get answer</div>
+              <div class="bot-preview-hint">Responses in ~10 seconds</div>
+            </div>
+            <div class="bot-preview-divider"></div>
+            <div class="bot-preview-response">
+              <div class="bot-preview-response-header"><div class="bot-preview-response-label">Advisory Response</div></div>
+              <div class="bot-preview-section-head">Context</div>
+              <div class="bot-preview-text">You're running a subscription gaming bundle — think Humble Choice or Xbox Game Pass Indie tier — and the question is about which growth levers matter most at 3,000 subscribers.</div>
+              <div class="bot-preview-section-head">The Answer</div>
+              <div class="bot-preview-text">At 3,000 subs and $5/month, you're at ~$180K ARR. Doubling means getting to 6,000 subs or expanding revenue per subscriber — ideally both. Fix retention first...</div>
+            </div>
+            <div class="bot-preview-fade"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gap">
+  <div class="container">
+    <div class="section-label">समस्या</div>
+    <h2 class="section-title">ग्रोथ-स्टेज SaaS दो बुरे विकल्पों के<br>बीच फंसा हुआ है।</h2>
+    <div class="gap-grid">
+      <div class="gap-side gap-bad">
+        <div class="gap-side-label"><div class="gap-indicator"></div>विकल्प</div>
+        <ul class="gap-items">
+          <li>जूनियर कंसल्टेंट फ्रेमवर्क देते हैं, निर्णय नहीं</li>
+          <li>फुल-टाइम VP हायर करने में $250K+ खर्च और 6 महीने का समय लगता है</li>
+          <li>एजेंसियां जनरलिस्ट हैं — SaaS प्राइसिंग ऑपरेटर नहीं</li>
+          <li>AI टूल्स के पास आपके मार्केट का संस्थागत ज्ञान नहीं है</li>
+          <li>बोर्ड डेक्स ऑपरेशनल रियलिटी से नहीं जुड़ते</li>
+        </ul>
+      </div>
+      <div class="gap-side gap-good">
+        <div class="gap-side-label"><div class="gap-indicator"></div>Borthwick Advisory</div>
+        <ul class="gap-items">
+          <li>हर जवाब में 17 साल का SaaS ऑपरेटर अनुभव</li>
+          <li>तुरंत उपलब्ध — कोई हायरिंग प्रोसेस नहीं, कोई रैंप-अप नहीं</li>
+          <li>वास्तविक उपयोग के लिए विशिष्ट, संख्यात्मक जवाब</li>
+          <li>जटिल प्रश्न सीधे Jon को एस्कलेट — 24 घंटे में जवाब</li>
+          <li>प्राइसिंग, GTM और बोर्ड नैरेटिव एक ही रिश्ते में</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <div class="section-label">यह कैसे काम करता है</div>
+    <h2 class="section-title">कुछ भी पूछें। एक ऑपरेटर का जवाब पाएं।</h2>
+    <p class="section-sub">यह Advisory AI द्वारा संचालित है जो 17+ साल के SaaS प्राइसिंग, GTM और प्रोडक्ट स्ट्रैटेजी अनुभव पर आधारित है — और Jon जो मायने रखता है उसमें शामिल रहते हैं।</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">अपना सवाल पूछें</div>
+        <div class="step-body">कोई भी प्राइसिंग, GTM या स्ट्रैटेजी सवाल टाइप करें — पैकेजिंग निर्णय, कॉम्पिटिटिव पोजिशनिंग, बोर्ड प्रेप, सेगमेंटेशन। कोई शेड्यूलिंग नहीं, कोई इंतजार नहीं।</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">ऑपरेटर का जवाब पाएं</div>
+        <div class="step-body">AI Jon के SaaS अनुभव पर आधारित जवाब देता है — LogMeIn की स्केलिंग, Cordance अधिग्रहण, Rapid7 कमर्शियल स्ट्रैटेजी। कोई फ्रेमवर्क नहीं। एक ठोस जवाब।</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Jon जो मायने रखता है उसे देखते हैं</div>
+        <div class="step-body">जटिल या हाई-स्टेक्स सवाल Jon की व्यक्तिगत समीक्षा के लिए फ्लैग होते हैं। वे रोज़ देखते हैं और सीधे जवाब भेजते हैं — अक्सर कुछ घंटों में। मुश्किल चीज़ों में आप कभी सिर्फ bot से बात नहीं करते।</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="usecases">
+  <div class="container">
+    <div class="section-label">लोग क्या पूछते हैं</div>
+    <h2 class="section-title">असली सवाल। ऑपरेटर के जवाब।</h2>
+    <p class="section-sub">वे सवाल जो ग्रोथ-स्टेज SaaS टीमें हर हफ्ते झेलती हैं — और जिनका सीधा जवाब नहीं मिलता।</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-q">हम एक usage-based tier जोड़ना चाहते हैं। हम इसे कैसे प्राइस करें बिना अपने seat-based कस्टमर्स को नुकसान पहुंचाए?</div>
+        <div class="case-a">LogMeIn और Cordance में हाइब्रिड प्राइसिंग के Jon के अनुभव से तुरंत जवाब — फ्लोर प्राइसिंग और grandfathering लॉजिक पर विशेष गाइडलाइन्स के साथ।</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">हमारे बोर्ड को competitive moat स्लाइड चाहिए। हमारे पास असली differentation है लेकिन हम इसे generic लगे बिना बता नहीं पाते।</div>
+        <div class="case-a">इंटरैक्टिव रूप से काम किया, Jon के सीधे फीडबैक के साथ बोर्ड नैरेटिव पर जो financial outcomes से जुड़े — सिर्फ प्रोडक्ट फीचर्स से नहीं।</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">हम enterprise में जा रहे हैं। SMB से upmarket जाने पर GTM motion में क्या बदलता है?</div>
+        <div class="case-a">ऑपरेटर अनुभव से विस्तृत जवाब — कोई "land and expand" स्लाइड नहीं। champion identification, procurement cycles और POC structure पर विशेष मार्गदर्शन।</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">हमें अभी-अभी acquire किया गया। Integration के दौरान हम कस्टमर्स खोए बिना अपनी प्राइसिंग कैसे बचाएं?</div>
+        <div class="case-a">Jon ने Cordance में 10 acquisitions में प्राइसिंग लीड की ($0 से $40M ARR 18 महीनों में)। यह ठीक वैसा सवाल है जो सीधे उनके पास जाता है।</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sample">
+  <div class="container">
+    <div class="section-label">व्यवहार में देखें</div>
+    <h2 class="section-title">एक असली सवाल। एक असली जवाब।</h2>
+    <p class="section-sub">यह advisory का वास्तविक आउटपुट है — बिना एडिट किए। यह सवाल 3,000 सब्सक्राइबर्स वाली एक indie gaming subscription कंपनी से आया था।</p>
+    <div class="sample-wrap">
+      <div class="sample-input">
+        <div class="sample-input-row">
+          <div>
+            <div class="sample-field-label">Company Context <span class="sample-field-hint">Optional but improves answers</span></div>
+            <div class="sample-field-value">We sell indie games — over 100 titles, 3,000 subscribers, $5/month.</div>
+          </div>
+          <div>
+            <div class="sample-field-label">The Question</div>
+            <div class="sample-field-value">How can we double size in the next 12 months?</div>
+          </div>
+        </div>
+      </div>
+      <div class="sample-response">
+        <div class="sample-response-header">
+          <div class="sample-response-label">Advisory Response</div>
+          <div class="sample-response-actions">
+            <span class="sample-action-btn">Copy</span>
+            <span class="sample-action-btn">New question</span>
+          </div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">Context</div>
+          <div class="sample-section-body">You're running a subscription gaming bundle — think Humble Choice or Xbox Game Pass Indie tier — and the question is really about which growth levers matter most at 3,000 subscribers before you burn money on the wrong ones.</div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">The Answer</div>
+          <div class="sample-section-body">
+            <p style="margin-bottom:18px;">At 3,000 subs and $5/month, you're at ~$180K ARR. Doubling means getting to 6,000 subs or finding ways to expand revenue per subscriber — ideally both. Here's how I'd prioritize:</p>
+            <div class="sample-point">
+              <div class="sample-point-head">1. Fix retention before pouring water into a leaky bucket</div>
+              <div class="sample-point-body">Before any acquisition spend, know your monthly churn rate. At this scale, even 8% monthly churn means you're replacing nearly your entire subscriber base every year just to stay flat. Target under 5% monthly.</div>
+            </div>
+            <div class="sample-point">
+              <div class="sample-point-head">2. Add a second price point — annual plans</div>
+              <div class="sample-point-body">Offer an annual plan at $45–48/year (20–25% discount). This drops monthly churn to near zero for that cohort, pulls cash forward, and signals commitment from your best customers.</div>
+            </div>
+            <div class="sample-point">
+              <div class="sample-point-head">3. Launch a referral loop</div>
+              <div class="sample-point-body">Your existing 3,000 subs are your cheapest acquisition channel. A 10% referral conversion rate on your base generates 300 new subs with near-zero CAC.</div>
+            </div>
+          </div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">Priority Order for Next 90 Days</div>
+          <div class="sample-priority">1. Know your churn rate &nbsp;·&nbsp; 2. Launch annual plans &nbsp;·&nbsp; 3. Launch referral program &nbsp;·&nbsp; 4. Test one distribution partnership</div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">One Thing to Pressure-Test</div>
+          <div class="sample-section-body">Do you have licensing rights that allow you to bundle and distribute these 100+ games in a subscription model, and are those rights exclusive enough to defend against a larger player replicating your catalog?</div>
+        </div>
+        <div class="sample-sign">— Borthwick Advisory</div>
+        <div class="sample-flag">
+          <span class="sample-flag-btn">⚑ Flag for Jon's review</span>
+          <span class="sample-flag-note">Complex or high-stakes? Jon will respond within 24 hours.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tiers">
+  <div class="container">
+    <div class="section-label">मूल्य निर्धारण</div>
+    <h2 class="section-title">तुरंत शुरू करें। जब ज़रूरत हो तब एस्कलेट करें।</h2>
+    <p class="section-sub">तीन स्तर — इस आधार पर कि आपकी स्थिति को Jon तक कितनी सीधी पहुंच की वास्तव में ज़रूरत है।</p>
+    <div class="free-trial-banner">
+      <div class="free-trial-left">
+        <span class="free-trial-badge">मुफ्त</span>
+        <div class="free-trial-text">बिना अकाउंट के एक सवाल आज़माएं। <span>सब्सक्राइब करने से पहले गुणवत्ता देखें।</span></div>
+      </div>
+      <a href="https://app.borthwickadvisory.com" class="free-trial-cta">मुफ्त सवाल पूछें →</a>
+    </div>
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="tier-name">सेल्फ-सर्व</div>
+        <div class="tier-price">$149<span style="font-size:20px;font-family:-apple-system,sans-serif;letter-spacing:0">/माह</span></div>
+        <div class="tier-price-note">कभी भी रद्द करें</div>
+        <div class="tier-desc">AI-संचालित advisory तक असीमित पहुंच, Jon के SaaS अनुभव पर प्रशिक्षित। प्राइसिंग, GTM और स्ट्रैटेजी पर तुरंत जवाब — कोई शेड्यूलिंग नहीं।</div>
+        <ul class="tier-features">
+          <li>Advisory इंटरफेस के माध्यम से असीमित सवाल</li>
+          <li>17+ साल के SaaS ऑपरेटर अनुभव पर AI जवाब</li>
+          <li>प्राइसिंग, GTM, सेगमेंटेशन, बोर्ड नैरेटिव</li>
+          <li>सेकंडों में जवाब, दिनों में नहीं</li>
+          <li>कभी भी रद्द करें, कोई प्रतिबद्धता नहीं</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_6oUfZi2fs9D0aE50YW1gs00" class="tier-cta tier-cta-secondary">शुरू करें</a>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-badge">सबसे लोकप्रिय</div>
+        <div class="tier-name">गाइडेड</div>
+        <div class="tier-price">$499<span style="font-size:20px;font-family:-apple-system,sans-serif;letter-spacing:0">/माह</span></div>
+        <div class="tier-price-note">महीने-दर-महीने</div>
+        <div class="tier-desc">सेल्फ-सर्व में सब कुछ, साथ ही आपके सबसे जटिल और महत्वपूर्ण सवाल Jon की व्यक्तिगत समीक्षा के लिए फ्लैग होते हैं — 24 घंटे में सीधे जवाब।</div>
+        <ul class="tier-features">
+          <li>सेल्फ-सर्व में सब कुछ</li>
+          <li>जटिल सवाल स्वतः Jon को एस्कलेट</li>
+          <li>Jon के व्यक्तिगत जवाब 24 घंटों में</li>
+          <li>मासिक 30-मिनट स्ट्रैटेजी कॉल</li>
+          <li>तत्काल मुद्दों के लिए सीधा ईमेल एक्सेस</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_00wfZig6i8yWfYpgXU1gs01" class="tier-cta tier-cta-primary">शुरू करें</a>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">एम्बेडेड</div>
+        <div class="tier-price" style="font-size:28px;padding-top:6px;">आवेदन पर</div>
+        <div class="tier-price-note">सीमित उपलब्धता</div>
+        <div class="tier-desc">Jon एक फ्रैक्शनल ऑपरेटर के रूप में एम्बेड — CMO, CPO, Head of Pricing या VP Strategy। उन कंपनियों के लिए जिन्हें एक ऑपरेटर की ज़रूरत है, न कि सिर्फ इनबॉक्स में एक सलाहकार।</div>
+        <ul class="tier-features">
+          <li>गाइडेड में सब कुछ</li>
+          <li>Jon का सीधा समय — हफ्ते में 2 से 3 दिन</li>
+          <li>पूरी टीम और स्टेकहोल्डर एक्सेस</li>
+          <li>बोर्ड और एग्जीक्यूटिव प्रेप शामिल</li>
+          <li>न्यूनतम 3 महीने, संरचित हैंडऑफ</li>
+        </ul>
+        <a href="https://app.borthwickadvisory.com" class="tier-cta tier-cta-secondary">डिस्कवरी कॉल बुक करें</a>
+        <div class="tier-coming">सीमित स्लॉट — वर्तमान में वेटलिस्ट</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">हमारे बारे में</div>
+        <h2 class="section-title">कार्यों के बीच<br>संयोजी ऊतक।</h2>
+        <div class="about-body" style="margin-top:24px;">
+          <p>Jon Borthwick ने 17+ साल हाई-ग्रोथ SaaS कंपनियों के अंदर बिताए हैं — बाहर से सलाह देते हुए नहीं, बल्कि एक सीनियर ऑपरेटर के रूप में प्राइसिंग, GTM और कमर्शियल स्ट्रैटेजी चलाते हुए। उनकी बढ़त कार्यों के बीच संयोजी ऊतक है: प्रोडक्ट, फाइनेंस और गो-टू-मार्केट को एक एकीकृत विकास प्रणाली में बदलना।</p>
+          <p><strong>LogMeIn</strong> में उन्होंने 13 साल $25M से $1B ARR तक स्केलिंग में बिताए — GoTo मर्जर में प्राइसिंग स्ट्रैटेजी लीड की, $125M LastPass अधिग्रहण को आगे बढ़ाया, और LastPass ARR को बंद होने के बाद $12M से $40M तक बढ़ाया। <strong>Cordance</strong> में वे Employee #4 थे — PE-backed SaaS roll-up के लिए कमर्शियल मॉडल बनाया जो 10 अधिग्रहणों के साथ 18 महीनों में $0 से $40M ARR तक पहुंचा। <strong>Rapid7</strong> में उन्होंने एक publicly traded MDR प्रोवाइडर के लिए मोनेटाइज़ेशन स्ट्रैटेजी, प्लेटफॉर्म पैकेजिंग और ARR uplift लीड किया।</p>
+          <p>Advisory उस अनुभव पर बनी है — एक AI में संकुचित जो अधिकांश सवालों का तुरंत जवाब दे सकती है, Jon हर उस चीज़ में शामिल रहते हैं जो वास्तव में मायने रखती है।</p>
+        </div>
+      </div>
+      <div>
+        <div class="about-roles">
+          <div class="role-item">
+            <div class="role-company">Progress Software</div>
+            <div class="role-title">Director, Pricing Strategy</div>
+            <div class="role-note">वर्तमान · Publicly traded infrastructure SaaS</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Rapid7</div>
+            <div class="role-title">Sr. Director, Commercial Strategy</div>
+            <div class="role-note">Publicly traded MDR &amp; cybersecurity</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Cordance</div>
+            <div class="role-title">VP Pricing &amp; Product Marketing</div>
+            <div class="role-note">Employee #4 · $0 → $40M ARR · 10 अधिग्रहण</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">LogMeIn</div>
+            <div class="role-title">VP Business Strategy &amp; Operations</div>
+            <div class="role-note">13 साल · $25M → $1B ARR · LastPass अधिग्रहण · GoTo merger</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Toast</div>
+            <div class="role-title">Independent Pricing Advisor</div>
+            <div class="role-note">ग्रोथ-स्टेज SaaS के लिए प्राइसिंग advisory</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="container-narrow">
+    <h2 class="section-title">वह सवाल जिसका आपको सीधा जवाब नहीं मिल रहा — पूछें।</h2>
+    <p class="section-sub">एक मुफ्त सवाल से शुरू करें और गुणवत्ता देखें। या सब्सक्राइब करें और हर चीज़ पर एक ऑपरेटर का जवाब पाएं।</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://app.borthwickadvisory.com" class="btn-primary">Advisory आज़माएं →</a>
+      <a href="https://app.borthwickadvisory.com" class="btn-secondary" style="color:var(--faint)">Jon से सीधे बात करें</a>
+    </div>
+    <div class="cta-note">jonborthwick@gmail.com · Boston, MA · borthwickadvisory.com</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand"><strong>Borthwick Advisory</strong> · ग्रोथ-स्टेज SaaS के लिए फ्रैक्शनल एग्जीक्यूटिव और स्ट्रैटेजी Advisory</div>
+  <div class="footer-contact"><a href="mailto:jonborthwick@gmail.com">jonborthwick@gmail.com</a></div>
+</footer>
+
+<script>
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-switcher')) {
+    document.querySelectorAll('.lang-switcher.open').forEach(function(el) { el.classList.remove('open'); });
+  }
+});
+</script>
+</body>
+</html>
