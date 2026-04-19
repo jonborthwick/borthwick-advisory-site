@@ -1074,6 +1074,19 @@ footer {
   </div>
 </nav>
 
+<!--
+HERO A/B CANDIDATE — Connected tier launch variant
+Test this headline + sub when running Connected waitlist traffic.
+Rationale: addresses the "hypothetical advisory" objection directly;
+surfaces the data-connected differentiation above the fold.
+
+Headline: "The advisor that reads your data."
+Sub: "Ask any pricing or GTM question. Connected pulls live from Salesforce — pipeline, ARR by segment, churn signals — and answers from Jon's playbook against your actual numbers."
+Eyebrow: "SaaS Advisory · AI-powered · Salesforce-connected"
+Stats: "17+" (years SaaS) / "$2,499/mo" (Connected tier) / "<10s" (answer time)
+CTA primary: "Join the Connected waitlist →" href="#connected-waitlist"
+CTA secondary: "Try the free advisory" href="https://borthwick-advisor-bot.netlify.app"
+-->
 <!-- HERO -->
 <section id="hero">
   <div class="container">
@@ -1360,6 +1373,41 @@ footer {
         <a href="https://buy.stripe.com/test_00wfZig6i8yWfYpgXU1gs01" class="tier-cta tier-cta-primary">Get started</a>
       </div>
 
+      <div class="tier-card" id="connected-waitlist">
+        <div class="tier-badge" style="background:var(--warm-light);color:var(--warm);">Early access</div>
+        <div class="tier-name">Connected</div>
+        <div class="tier-price">$2,499<span style="font-size:20px;font-family:var(--sans);letter-spacing:0">/mo</span></div>
+        <div class="tier-price-note">Month-to-month</div>
+        <div class="tier-desc">The advisory, connected to your Salesforce. Ask any pricing or GTM question — the AI reads your pipeline, ARR, and segment data live and answers from Jon's playbook against your actual numbers.</div>
+        <ul class="tier-features">
+          <li>500 questions per month included</li>
+          <li>Additional questions $2 each, billed at period end</li>
+          <li>Live Salesforce data — pipeline, ARR, segment mix, churn signals</li>
+          <li>Answers grounded in your numbers, not hypotheticals</li>
+          <li>Complex questions flagged to Jon within 24 hours</li>
+          <li>You hold your own credentials — we touch nothing</li>
+        </ul>
+        <div id="connected-waitlist-form" style="margin-top:8px;">
+          <input type="text" id="connectedName" placeholder="Your name"
+            style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:7px;font-size:14px;font-family:var(--sans);color:var(--off-black);background:var(--bg);outline:none;margin-bottom:8px;">
+          <input type="email" id="connectedEmail" placeholder="your@email.com"
+            style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:7px;font-size:14px;font-family:var(--sans);color:var(--off-black);background:var(--bg);outline:none;margin-bottom:8px;">
+          <select id="connectedOrgSize"
+            style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:7px;font-size:14px;font-family:var(--sans);color:var(--off-black);background:var(--bg);outline:none;margin-bottom:8px;cursor:pointer;">
+            <option value="">Salesforce org size (optional)</option>
+            <option value="Under 10k records">Under 10,000 records</option>
+            <option value="10k–100k records">10,000–100,000 records</option>
+            <option value="100k–1M records">100,000–1M records</option>
+            <option value="Over 1M records">Over 1M records</option>
+          </select>
+          <button onclick="submitConnectedWaitlist()" id="connectedWaitlistBtn"
+            style="width:100%;padding:11px 20px;background:var(--warm);color:var(--white);border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s;">Join the waitlist</button>
+        </div>
+        <div id="connected-waitlist-success" style="display:none;font-size:13px;color:var(--mid);margin-top:10px;padding:12px 14px;background:var(--bg);border-radius:7px;border:1px solid var(--border);">
+          You're on the list. We'll be in touch as soon as the first spots open.
+        </div>
+      </div>
+
       <div class="tier-card">
         <div class="tier-name">Embedded</div>
         <div class="tier-price" style="font-size:28px;padding-top:6px;">By application</div>
@@ -1383,6 +1431,83 @@ footer {
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- CONNECTED TIER — VALUE -->
+<section id="connected-value" style="background:var(--warm-light);border-top:1px solid #e8d5c8;border-bottom:1px solid #e8d5c8;">
+  <div class="container">
+    <div class="section-label" style="color:var(--warm);">Connected Tier</div>
+    <h2 class="section-title">The advisor, connected to your data.</h2>
+    <p class="section-sub">Most advisory is hypothetical. Connected isn't. The AI reads your actual Salesforce data — pipeline, ARR by segment, churn signals, deal velocity — and Jon's pricing and GTM playbook runs against your numbers, not a generic SaaS model.</p>
+
+    <div class="gap-grid" style="margin-top:40px;">
+      <div class="gap-side gap-bad">
+        <div class="gap-side-label">
+          <div class="gap-indicator"></div>
+          Without Connected
+        </div>
+        <ul class="gap-items">
+          <li>"Our enterprise pipeline is strong" — but no one can quantify what strong means</li>
+          <li>Pricing advice built on your description of the data, not the data itself</li>
+          <li>Segment analysis done by hand before every conversation</li>
+          <li>Questions answered in the abstract — useful, but not actionable this week</li>
+        </ul>
+      </div>
+      <div class="gap-side gap-good">
+        <div class="gap-side-label">
+          <div class="gap-indicator" style="background:var(--warm);"></div>
+          With Connected
+        </div>
+        <ul class="gap-items">
+          <li>Ask "which segment is churning fastest?" — the AI queries Salesforce and answers in seconds</li>
+          <li>ARR expansion analysis built from your actual account records</li>
+          <li>Pipeline coverage ratios and deal velocity calculated live</li>
+          <li>Pricing decisions grounded in your real segment economics</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;text-align:center;">
+      <p style="font-size:15px;color:var(--mid);margin-bottom:16px;">Salesforce at launch. Additional MCP integrations (HubSpot, Chargebee, Snowflake) on the roadmap.</p>
+      <a href="#connected-waitlist" style="display:inline-block;padding:13px 28px;background:var(--warm);color:var(--white);border-radius:8px;font-size:15px;font-weight:500;text-decoration:none;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Join the waitlist →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECTED TIER — SAMPLE Q&A -->
+<section id="connected-sample" style="background:var(--white);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div class="section-label" style="color:var(--warm);">Connected in Action</div>
+    <h2 class="section-title">Five questions that change when<br>the advisor has live data.</h2>
+    <p class="section-sub">These are the kinds of questions Connected answers in seconds — not because the AI is smarter, but because it's reading from your actual Salesforce records, not a hypothetical.</p>
+
+    <div class="cases-grid" style="margin-top:40px;">
+      <div class="case-card" style="border-left:3px solid var(--warm);">
+        <div class="case-q">Which of our pricing tiers is churning fastest, and is it structural or recent?</div>
+        <div class="case-a">Connected queries closed-lost and churned accounts by product tier across the last 12 months, compares churn rate by cohort, and flags whether it's accelerating. Answer in ~8 seconds. Without live data: you'd need to pull this manually before you could even ask the question.</div>
+      </div>
+      <div class="case-card" style="border-left:3px solid var(--warm);">
+        <div class="case-q">We're raising prices next quarter. Which accounts are most likely to push back based on deal history?</div>
+        <div class="case-a">Connected pulls discount history, negotiation notes, and contract end dates across your Salesforce accounts. Surfaces the top 20% by churn risk before you start the conversation. Jon's frameworks on price-increase sequencing run against your actual account list — not a template.</div>
+      </div>
+      <div class="case-card" style="border-left:3px solid var(--warm);">
+        <div class="case-q">Our pipeline coverage looks healthy but close rates are dropping. Where's the break?</div>
+        <div class="case-a">Connected calculates pipeline coverage ratio by stage, close rate trends by rep and segment, and average deal velocity over the last 90 days. Cross-references against stage distribution changes. Most pipeline coverage problems are actually late-stage concentration — Connected shows you which one you're dealing with.</div>
+      </div>
+      <div class="case-card" style="border-left:3px solid var(--warm);">
+        <div class="case-q">What's our net revenue retention by segment, and which segment has the best expansion economics?</div>
+        <div class="case-a">Connected queries ARR by account at the start and end of each period, calculates NRR by segment, and ranks segments by expansion rate. Surfaces the segments where your upsell motion is working versus where you're bleeding quietly. NRR by segment is the highest-signal number most teams are flying blind on.</div>
+      </div>
+      <div class="case-card" style="border-left:3px solid var(--warm);">
+        <div class="case-q">We just ran a discount-heavy quarter to hit the number. What did that actually cost us in ARR?</div>
+        <div class="case-a">Connected calculates the difference between contract value at list versus contract value at close across the quarter, computes the ARR impact of average discount depth, and projects the compounding cost at renewal. Jon's view: discounting to hit a number is borrowing from your next quarter at a variable interest rate. Connected shows you the rate.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;text-align:center;">
+      <a href="#connected-waitlist" style="display:inline-block;padding:13px 28px;background:var(--warm);color:var(--white);border-radius:8px;font-size:15px;font-weight:500;text-decoration:none;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Join the Connected waitlist →</a>
     </div>
   </div>
 </section>
@@ -1464,6 +1589,25 @@ document.addEventListener('click', function(e) {
 </script>
 
 <script>
+async function submitConnectedWaitlist() {
+  const name = document.getElementById('connectedName').value.trim();
+  const email = document.getElementById('connectedEmail').value.trim();
+  const orgSize = document.getElementById('connectedOrgSize').value.trim();
+  if (!email) return;
+  const btn = document.getElementById('connectedWaitlistBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  try {
+    await fetch('https://borthwick-advisor-bot.netlify.app/.netlify/functions/notify-connected-waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, orgSize }),
+    });
+  } catch { /* best-effort */ }
+  document.getElementById('connected-waitlist-form').style.display = 'none';
+  document.getElementById('connected-waitlist-success').style.display = 'block';
+}
+
 async function submitEmbeddedWaitlist() {
   const email = document.getElementById('embeddedEmail').value.trim();
   if (!email) return;
