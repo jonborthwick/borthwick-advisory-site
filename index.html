@@ -1012,6 +1012,16 @@ footer {
 
 .footer-contact a:hover { color: var(--white); }
 
+/* ── LANG SWITCHER ── */
+.lang-switcher { position: relative; margin-left: 16px; padding-left: 16px; border-left: 1px solid var(--border); }
+.lang-current { font-size: 12px; color: var(--mid); background: none; border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-family: inherit; line-height: 1.5; }
+.lang-current:hover { background: var(--bg); }
+.lang-menu { display: none; position: absolute; right: 0; top: calc(100% + 6px); background: var(--white); border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.10); min-width: 120px; z-index: 200; overflow: hidden; }
+.lang-switcher.open .lang-menu { display: block; }
+.lang-menu a { display: block; padding: 8px 14px; font-size: 13px; color: var(--mid); text-decoration: none; transition: background 0.1s; }
+.lang-menu a:hover { background: var(--bg); color: var(--black); }
+.lang-menu a.active { color: var(--black); font-weight: 600; background: var(--accent-light); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; }
@@ -1052,9 +1062,15 @@ footer {
     <li><a href="https://borthwick-advisor-bot.netlify.app" class="nav-cta">Try the advisory</a></li>
   </ul>
   <div class="lang-switcher">
-    <a href="/" class="lang-btn active">EN</a>
-    <a href="/index-ja" class="lang-btn">日本語</a>
-    <a href="/index-zh" class="lang-btn">中文</a>
+    <button class="lang-current" onclick="this.parentElement.classList.toggle('open')">EN ▾</button>
+    <div class="lang-menu">
+      <a href="/" class="active">English</a>
+      <a href="/index-es">Español</a>
+      <a href="/index-de">Deutsch</a>
+      <a href="/index-hi">हिंदी</a>
+      <a href="/index-ja">日本語</a>
+      <a href="/index-zh">中文</a>
+    </div>
   </div>
 </nav>
 
@@ -1317,7 +1333,8 @@ footer {
         <div class="tier-price-note">Cancel anytime</div>
         <div class="tier-desc">Unlimited access to the AI-powered advisory, trained on Jon's SaaS experience. Instant answers on pricing, GTM, and strategy — no scheduling required.</div>
         <ul class="tier-features">
-          <li>Unlimited questions via the advisory interface</li>
+          <li>50 questions per month included</li>
+          <li>Additional questions $2 each, billed at period end</li>
           <li>AI answers trained on 17+ years of SaaS operator experience</li>
           <li>Pricing, GTM, segmentation, board narrative</li>
           <li>Response in seconds, not days</li>
@@ -1333,7 +1350,8 @@ footer {
         <div class="tier-price-note">Month-to-month</div>
         <div class="tier-desc">Everything in Self-Serve, plus your most complex and high-stakes questions get flagged for Jon's personal review — answered directly within 24 hours.</div>
         <ul class="tier-features">
-          <li>Everything in Self-Serve</li>
+          <li>250 questions per month included</li>
+          <li>Additional questions $2 each, billed at period end</li>
           <li>Complex questions flagged to Jon automatically</li>
           <li>Jon's personal responses within 24 hours</li>
           <li>Monthly 30-min strategy call</li>
@@ -1354,8 +1372,15 @@ footer {
           <li>Board and exec prep included</li>
           <li>3-month minimum, structured handoff</li>
         </ul>
-        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-secondary">Book a discovery call</a>
-        <div class="tier-coming">Limited slots — currently waitlisting</div>
+        <div id="embedded-waitlist-form" style="margin-top:8px;">
+          <input type="email" id="embeddedEmail" placeholder="your@email.com"
+            style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:7px;font-size:14px;font-family:var(--sans);color:var(--off-black);background:var(--bg);outline:none;margin-bottom:8px;">
+          <button onclick="submitEmbeddedWaitlist()" id="embeddedWaitlistBtn"
+            style="width:100%;padding:11px 20px;background:var(--black);color:var(--white);border:none;border-radius:7px;font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s;">Join the waitlist</button>
+        </div>
+        <div id="embedded-waitlist-success" style="display:none;font-size:13px;color:var(--mid);margin-top:10px;padding:12px 14px;background:var(--bg);border-radius:7px;border:1px solid var(--border);">
+          You're on the list. We'll be in touch.
+        </div>
       </div>
 
     </div>
@@ -1429,5 +1454,32 @@ footer {
   </div>
 </footer>
 
+
+<script>
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.lang-switcher')) {
+    document.querySelectorAll('.lang-switcher.open').forEach(function(el) { el.classList.remove('open'); });
+  }
+});
+</script>
+
+<script>
+async function submitEmbeddedWaitlist() {
+  const email = document.getElementById('embeddedEmail').value.trim();
+  if (!email) return;
+  const btn = document.getElementById('embeddedWaitlistBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  try {
+    await fetch('https://borthwick-advisor-bot.netlify.app/.netlify/functions/notify-embedded-waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+  } catch { /* best-effort */ }
+  document.getElementById('embedded-waitlist-form').style.display = 'none';
+  document.getElementById('embedded-waitlist-success').style.display = 'block';
+}
+</script>
 </body>
 </html>
