@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borthwick Advisory — SaaS定价与GTM战略</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0f0f0e; --off-black: #1c1b19; --dark: #2a2927; --mid: #5c5a56;
+  --muted: #8c8a85; --faint: #c4c1bb; --border: #e6e3dd; --bg: #faf9f6;
+  --white: #ffffff; --accent: #1a3a5c; --accent-light: #e8eef5; --accent-mid: #2e5f96;
+  --warm: #8b5e3c; --warm-light: #f5ede5;
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --sans: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'STHeiti', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--off-black); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,249,246,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-size: 15px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; text-decoration: none; }
+.nav-logo span { color: var(--muted); font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { font-size: 14px; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--black); }
+.nav-cta { padding: 8px 18px; background: var(--black); color: var(--white) !important; border-radius: 6px; font-size: 13px !important; font-weight: 500; transition: background 0.15s !important; }
+.nav-cta:hover { background: var(--dark) !important; }
+.lang-switcher { display: flex; align-items: center; gap: 2px; margin-left: 16px; padding-left: 16px; border-left: 1px solid var(--border); }
+.lang-btn { font-size: 12px; color: var(--faint); text-decoration: none; padding: 3px 7px; border-radius: 4px; transition: color 0.15s; }
+.lang-btn:hover { color: var(--mid); }
+.lang-btn.active { color: var(--mid); font-weight: 600; }
+section { padding: 100px 40px; }
+.container { max-width: 1040px; margin: 0 auto; }
+.container-narrow { max-width: 720px; margin: 0 auto; }
+#hero { padding-top: 140px; padding-bottom: 100px; background: var(--white); border-bottom: 1px solid var(--border); }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.hero-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 24px; }
+.hero-headline { font-family: var(--serif); font-size: clamp(28px, 3.5vw, 46px); font-weight: 400; line-height: 1.25; color: var(--black); letter-spacing: -0.01em; margin-bottom: 28px; }
+.hero-sub { font-size: 17px; color: var(--mid); line-height: 1.75; margin-bottom: 40px; }
+.hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.btn-primary { display: inline-block; padding: 14px 28px; background: var(--black); color: var(--white); border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; transition: background 0.15s; }
+.btn-primary:hover { background: var(--dark); }
+.btn-secondary { display: inline-block; padding: 14px 28px; background: transparent; color: var(--mid); border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; transition: color 0.15s; }
+.btn-secondary:hover { color: var(--black); }
+.hero-stats { display: flex; gap: 40px; margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.hero-stat-num { font-family: var(--serif); font-size: 34px; font-weight: 400; color: var(--black); letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
+.hero-stat-label { font-size: 12px; color: var(--muted); line-height: 1.5; max-width: 140px; }
+.bot-preview { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05); }
+.bot-preview-bar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; }
+.bot-preview-title { font-size: 12px; font-weight: 600; color: var(--black); }
+.bot-preview-title span { color: var(--muted); font-weight: 400; }
+.bot-preview-access { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); }
+.bot-preview-body { padding: 20px; }
+.bot-preview-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
+.bot-preview-field { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--off-black); margin-bottom: 14px; line-height: 1.5; }
+.bot-preview-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.bot-preview-chip { font-size: 11px; color: var(--mid); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; white-space: nowrap; }
+.bot-preview-submit { display: flex; align-items: center; gap: 10px; }
+.bot-preview-btn { font-size: 13px; font-weight: 500; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 6px; padding: 7px 14px; cursor: default; }
+.bot-preview-hint { font-size: 12px; color: var(--faint); }
+.bot-preview-divider { height: 1px; background: var(--border); margin: 16px 0; }
+.bot-preview-response-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.bot-preview-response-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
+.bot-preview-section-head { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 6px; }
+.bot-preview-text { font-size: 12px; color: var(--off-black); line-height: 1.6; margin-bottom: 12px; }
+.bot-preview-fade { height: 40px; background: linear-gradient(to bottom, transparent, var(--white)); margin: -10px -20px 0; }
+#how { background: var(--bg); }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 16px; }
+.section-title { font-family: var(--serif); font-size: clamp(24px, 3vw, 38px); font-weight: 400; color: var(--black); letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 16px; }
+.section-sub { font-size: 17px; color: var(--mid); line-height: 1.75; max-width: 560px; margin-bottom: 64px; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.step { position: relative; }
+.step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--accent-light); color: var(--accent-mid); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.step-title { font-size: 17px; font-weight: 600; color: var(--black); margin-bottom: 10px; }
+.step-body { font-size: 15px; color: var(--mid); line-height: 1.7; }
+#gap { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 56px; }
+.gap-side { background: var(--white); padding: 40px; }
+.gap-side-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+.gap-bad .gap-side-label { color: var(--muted); }
+.gap-good .gap-side-label { color: var(--accent-mid); }
+.gap-indicator { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.gap-items { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.gap-items li { font-size: 15px; color: var(--off-black); padding-left: 22px; position: relative; line-height: 1.6; }
+.gap-bad .gap-items li::before { content: '×'; position: absolute; left: 0; color: var(--faint); font-weight: 600; }
+.gap-good .gap-items li::before { content: '→'; position: absolute; left: 0; color: var(--accent-mid); font-weight: 500; }
+#usecases { background: var(--bg); }
+.cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 56px; }
+.case-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 30px; }
+.case-q { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 10px; font-style: italic; }
+.case-q::before { content: '\201C'; }
+.case-q::after { content: '\201D'; }
+#sample { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.sample-wrap { margin-top: 48px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.05); }
+.sample-input { background: var(--bg); padding: 32px 40px; border-bottom: 1px solid var(--border); }
+.sample-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.sample-field-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.sample-field-hint { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 10px; color: var(--faint); }
+.sample-field-value { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-size: 14px; color: var(--off-black); line-height: 1.6; font-style: italic; }
+.sample-response { background: var(--white); padding: 40px; }
+.sample-response-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.sample-response-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
+.sample-response-actions { display: flex; gap: 8px; }
+.sample-action-btn { font-size: 12px; color: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; text-decoration: none; }
+.sample-section { margin-bottom: 24px; }
+.sample-section-head { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.sample-section-body { font-size: 15px; color: var(--off-black); line-height: 1.8; }
+.sample-point { margin-bottom: 18px; }
+.sample-point-head { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--black); margin-bottom: 6px; }
+.sample-point-body { font-size: 14px; color: var(--mid); line-height: 1.75; }
+.sample-priority { font-size: 14px; color: var(--off-black); line-height: 1.7; background: var(--bg); border-radius: 8px; padding: 14px 16px; }
+.sample-flag { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.sample-flag-btn { font-size: 13px; color: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 7px 14px; text-decoration: none; }
+.sample-flag-note { font-size: 13px; color: var(--muted); }
+.sample-sign { font-size: 14px; color: var(--muted); font-style: italic; margin-top: 20px; }
+#tiers { background: var(--bg); }
+.free-trial-banner { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; margin-top: 48px; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+.free-trial-left { display: flex; align-items: center; gap: 16px; }
+.free-trial-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--accent-light); color: var(--accent-mid); padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.free-trial-text { font-size: 15px; color: var(--off-black); }
+.free-trial-text span { color: var(--mid); font-size: 14px; }
+.free-trial-cta { font-size: 14px; font-weight: 500; color: var(--accent-mid); text-decoration: none; white-space: nowrap; transition: color 0.15s; }
+.free-trial-cta:hover { color: var(--black); }
+.tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.tier-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 36px 32px; position: relative; transition: box-shadow 0.2s; }
+.tier-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+.tier-card.featured { border-color: var(--accent-mid); box-shadow: 0 0 0 1px var(--accent-mid); }
+.tier-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-mid); color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.tier-name { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.tier-price { font-family: var(--serif); font-size: 38px; font-weight: 400; color: var(--black); letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
+.tier-price-note { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.tier-desc { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+.tier-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.tier-features li { font-size: 14px; color: var(--off-black); padding-left: 20px; position: relative; line-height: 1.5; }
+.tier-features li::before { content: '✓'; position: absolute; left: 0; color: var(--accent-mid); font-size: 12px; font-weight: 700; top: 2px; }
+.tier-cta { display: block; text-align: center; padding: 11px 20px; border-radius: 7px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.15s; }
+.tier-cta-primary { background: var(--black); color: var(--white); }
+.tier-cta-primary:hover { background: var(--dark); }
+.tier-cta-secondary { background: var(--bg); color: var(--off-black); border: 1px solid var(--border); }
+.tier-cta-secondary:hover { border-color: var(--faint); background: var(--white); }
+.tier-coming { font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px; }
+#about { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.about-body p { font-size: 16px; color: var(--mid); line-height: 1.85; margin-bottom: 20px; }
+.about-body p:last-child { margin-bottom: 0; }
+.about-body strong { color: var(--off-black); font-weight: 600; }
+.about-roles { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.role-item { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 3px; }
+.role-item:last-child { border-bottom: none; }
+.role-company { font-size: 14px; font-weight: 600; color: var(--black); }
+.role-title { font-size: 13px; color: var(--mid); }
+.role-note { font-size: 12px; color: var(--muted); font-style: italic; }
+#cta { background: var(--off-black); padding: 120px 40px; text-align: center; }
+#cta .section-title { color: var(--white); margin-bottom: 20px; font-size: clamp(24px, 3vw, 40px); }
+#cta .section-sub { color: var(--faint); margin: 0 auto 48px; }
+.cta-note { font-size: 13px; color: var(--muted); margin-top: 16px; }
+footer { background: var(--black); padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-brand { font-size: 14px; color: var(--muted); }
+.footer-brand strong { color: var(--faint); font-weight: 600; }
+.footer-contact { font-size: 13px; color: var(--muted); }
+.footer-contact a { color: var(--faint); text-decoration: none; }
+.footer-contact a:hover { color: var(--white); }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .hero-visual { display: none; } .sample-input-row { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  nav .nav-links li:not(:last-child) { display: none; }
+  section { padding: 70px 24px; }
+  #hero { padding: 120px 24px 80px; }
+  .steps { grid-template-columns: 1fr; gap: 32px; }
+  .gap-grid { grid-template-columns: 1fr; }
+  .tiers-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .free-trial-banner { flex-direction: column; align-items: flex-start; }
+  footer { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/index-zh" class="nav-logo">Borthwick Advisory <span>/ SaaS战略</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">工作方式</a></li>
+    <li><a href="#tiers">定价</a></li>
+    <li><a href="#about">关于</a></li>
+    <li><a href="https://borthwick-advisor-bot.netlify.app" class="nav-cta">试用咨询</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <a href="/" class="lang-btn">EN</a>
+    <a href="/index-ja" class="lang-btn">日本語</a>
+    <a href="/index-zh" class="lang-btn active">中文</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-eyebrow">分散式SaaS顾问服务 · AI驱动</div>
+        <h1 class="hero-headline">将产品、财务与GTM<br>整合为一个增长系统。</h1>
+        <p class="hero-sub">17年SaaS运营经验 — 通过AI即时获取，关键时刻由人工跟进。</p>
+        <div class="hero-actions">
+          <a href="#tiers" class="btn-primary">了解工作方式</a>
+          <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary">向Jon提问 →</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">17+</div>
+            <div class="hero-stat-label">SaaS年数，ARR从$25M增长至$1B</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">3</div>
+            <div class="hero-stat-label">服务层级 — 从自助到深度嵌入</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">24h</div>
+            <div class="hero-stat-label">标记问题的回复时间</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="bot-preview">
+          <div class="bot-preview-bar">
+            <div class="bot-preview-title">Borthwick Advisory <span>/ Strategy Q&amp;A</span></div>
+            <div class="bot-preview-access">咨询访问权限</div>
+          </div>
+          <div class="bot-preview-body">
+            <div class="bot-preview-label">公司背景 <span style="color:var(--faint);font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">可选，提升回答精准度</span></div>
+            <div class="bot-preview-field">我们销售独立游戏 — 100+款游戏，3,000名订阅用户，每月$5。</div>
+            <div class="bot-preview-label">您的问题</div>
+            <div class="bot-preview-field">如何在未来12个月内实现规模翻倍？</div>
+            <div class="bot-preview-chips">
+              <div class="bot-preview-chip">如何为免费增值层定价？</div>
+              <div class="bot-preview-chip">上移市场时GTM如何变化？</div>
+            </div>
+            <div class="bot-preview-submit">
+              <div class="bot-preview-btn">获取答案</div>
+              <div class="bot-preview-hint">约10秒内回复</div>
+            </div>
+            <div class="bot-preview-divider"></div>
+            <div class="bot-preview-response">
+              <div class="bot-preview-response-header">
+                <div class="bot-preview-response-label">咨询回复</div>
+              </div>
+              <div class="bot-preview-section-head">背景分析</div>
+              <div class="bot-preview-text">您运营的是订阅制游戏套餐服务。核心问题是：在3,000名订阅用户阶段，哪些增长杠杆最为关键。</div>
+              <div class="bot-preview-section-head">答案</div>
+              <div class="bot-preview-text">3,000名用户、每月$5，年经常性收入约为$18万。翻倍意味着达到6,000名用户，或提升每用户收入 — 最好两者兼顾...</div>
+            </div>
+            <div class="bot-preview-fade"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gap">
+  <div class="container">
+    <div class="section-label">问题所在</div>
+    <h2 class="section-title">成长期SaaS企业<br>陷于两难选择之间。</h2>
+    <div class="gap-grid">
+      <div class="gap-side gap-bad">
+        <div class="gap-side-label"><div class="gap-indicator"></div>现有选项</div>
+        <ul class="gap-items">
+          <li>初级顾问搭建框架，却不参与决策</li>
+          <li>招聘VP需要$250K以上，磨合期长达6个月</li>
+          <li>咨询机构是通才 — 并非SaaS定价专家</li>
+          <li>AI工具缺乏您所在市场的深度运营知识</li>
+          <li>董事会材料与运营实际脱节</li>
+        </ul>
+      </div>
+      <div class="gap-side gap-good">
+        <div class="gap-side-label"><div class="gap-indicator"></div>Borthwick Advisory</div>
+        <ul class="gap-items">
+          <li>17年SaaS运营经验，浓缩于每一个回答</li>
+          <li>即刻可用 — 无需招聘流程，无需磨合期</li>
+          <li>具体可量化的答案，真正能付诸实施</li>
+          <li>复杂问题直接升级给Jon — 24小时内人工确认</li>
+          <li>一段关系覆盖定价、GTM与董事会叙事</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <div class="section-label">工作方式</div>
+    <h2 class="section-title">提出任何问题。<br>获得运营者的答案。</h2>
+    <p class="section-sub">本咨询服务由AI提供支持，经过17年以上SaaS定价、GTM与产品战略训练 — 重要事项由Jon亲自跟进。</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">提出问题</div>
+        <div class="step-body">输入关于定价、GTM或战略的问题 — 产品包装、竞争定位、董事会准备、细分市场等。无需预约，无需等待。</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">获得运营者答案</div>
+        <div class="step-body">AI调用Jon的SaaS经验 — 在LogMeIn的规模化实践、Cordance的并购整合、Rapid7的商业战略 — 提供具体可执行的答案，而非框架模板。</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Jon审核重要事项</div>
+        <div class="step-body">复杂或高风险的问题将被标记，由Jon亲自审核，通常数小时内直接回复。遇到难题时，您不会只依赖AI。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="usecases">
+  <div class="container">
+    <div class="section-label">常见问题</div>
+    <h2 class="section-title">真实问题。运营者答案。</h2>
+    <p class="section-sub">成长期SaaS团队每周都会面对的问题 — 以及那些难以获得清晰答案的难题。</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-q">我们在考虑增加基于用量的套餐层级。如何定价才能不蚕食现有按席位付费的客户？</div>
+        <div class="case-a">Jon在LogMeIn和Cordance运营混合定价的亲身经验，即时提供具体护栏建议 — 包括底价设定与祖父条款逻辑。</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">董事会要求竞争优势幻灯片。我们有真实的差异化，但说出来总是听起来很普通。</div>
+        <div class="case-a">与Jon互动，获得直接反馈，将董事会叙事与财务结果挂钩，呈现真实的竞争壁垒。</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">我们要进军企业市场。从中小企业上移时，GTM打法需要哪些改变？</div>
+        <div class="case-a">来自运营经验的详细回答，涵盖内部拥护者识别、采购周期应对、概念验证结构等具体指导。</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">我们刚完成并购。整合期间如何保护定价策略，同时不流失客户？</div>
+        <div class="case-a">Jon在Cordance主导了10次并购中的定价工作（18个月内ARR从$0增至$4000万）。这类问题会直接升级给Jon本人处理。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sample">
+  <div class="container">
+    <div class="section-label">实际效果展示</div>
+    <h2 class="section-title">真实问题。真实答案。</h2>
+    <p class="section-sub">以下是咨询服务的真实输出内容 — 未经编辑。问题来自一家拥有3,000名订阅用户的独立游戏订阅公司。</p>
+    <div class="sample-wrap">
+      <div class="sample-input">
+        <div class="sample-input-row">
+          <div>
+            <div class="sample-field-label">公司背景 <span class="sample-field-hint">可选，提升回答精准度</span></div>
+            <div class="sample-field-value">我们销售独立游戏 — 100+款游戏，3,000名订阅用户，每月$5。</div>
+          </div>
+          <div>
+            <div class="sample-field-label">问题</div>
+            <div class="sample-field-value">如何在未来12个月内实现规模翻倍？</div>
+          </div>
+        </div>
+      </div>
+      <div class="sample-response">
+        <div class="sample-response-header">
+          <div class="sample-response-label">咨询回复</div>
+          <div class="sample-response-actions">
+            <span class="sample-action-btn">复制</span>
+            <span class="sample-action-btn">新问题</span>
+          </div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">背景分析</div>
+          <div class="sample-section-body">您运营的是订阅制游戏套餐服务 — 类似Humble Choice或Xbox Game Pass独立游戏层级。核心问题是：在3,000名订阅用户阶段，哪些增长杠杆最为关键。</div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">答案</div>
+          <div class="sample-section-body">
+            <p style="margin-bottom:18px;">3,000名用户、每月$5，年经常性收入约为$18万。翻倍意味着达到6,000名用户，或提升每用户收入 — 最好两者兼顾。优先顺序如下：</p>
+            <div class="sample-point">
+              <div class="sample-point-head">1. 先堵住漏水的桶，再往里注水</div>
+              <div class="sample-point-body">在加大获客投入之前，先搞清楚月度流失率。在这个规模下，月流失率8%意味着每年几乎要替换整个用户群才能维持平盘。目标是月流失率控制在5%以内。留存是增长的乘数。</div>
+            </div>
+            <div class="sample-point">
+              <div class="sample-point-head">2. 增加第二个价格点 — 年度套餐</div>
+              <div class="sample-point-body">以$45–48/年（折扣20–25%）推出年度套餐。这能做到三件事：让该群体的月流失率接近零、提前锁定现金流、展示最优质用户的承诺意愿。</div>
+            </div>
+            <div class="sample-point">
+              <div class="sample-point-head">3. 启动推荐裂变</div>
+              <div class="sample-point-body">现有3,000名订阅用户是最低成本的获客渠道，但几乎可以肯定还未被充分利用。为他们提供专属推荐链接 — 他们每成功推荐一人可获一个月免费，被推荐的朋友首月免费或享折扣。游戏受众具有强烈的圈子文化。</div>
+            </div>
+          </div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">未来90天优先事项</div>
+          <div class="sample-priority">1. 摸清流失率 &nbsp;·&nbsp; 2. 推出年度套餐 &nbsp;·&nbsp; 3. 启动推荐计划 &nbsp;·&nbsp; 4. 测试一个分销合作渠道</div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">需要验证的一个关键点</div>
+          <div class="sample-section-body">您是否拥有以订阅模式打包分发这100+款游戏的授权许可？那份游戏库版权关系才是您真正的护城河。在大力扩大获客规模之前，请先确认合同层面已无漏洞。</div>
+        </div>
+        <div class="sample-sign">— Borthwick Advisory</div>
+        <div class="sample-flag">
+          <span class="sample-flag-btn">⚑ 标记以供Jon审核</span>
+          <span class="sample-flag-note">问题复杂或至关重要？Jon将在24小时内亲自回复。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tiers">
+  <div class="container">
+    <div class="section-label">定价方案</div>
+    <h2 class="section-title">立即开始。需要时再升级。</h2>
+    <p class="section-sub">三个层级 — 根据您实际需要的与Jon直接接触程度来选择。</p>
+    <div class="free-trial-banner">
+      <div class="free-trial-left">
+        <span class="free-trial-badge">免费</span>
+        <div class="free-trial-text">
+          免费试问一个问题，无需注册账号。 <span>先验证质量，再做决定。</span>
+        </div>
+      </div>
+      <a href="https://borthwick-advisor-bot.netlify.app" class="free-trial-cta">免费提问 →</a>
+    </div>
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="tier-name">自助服务</div>
+        <div class="tier-price">$149<span style="font-size:20px;font-family:var(--sans);letter-spacing:0">/月</span></div>
+        <div class="tier-price-note">随时可取消</div>
+        <div class="tier-desc">无限访问由Jon的SaaS经验训练的AI咨询顾问。关于定价、GTM与战略的即时答案 — 无需预约。</div>
+        <ul class="tier-features">
+          <li>通过咨询界面无限提问</li>
+          <li>AI回答基于17年以上SaaS运营经验训练</li>
+          <li>覆盖定价、GTM、细分与董事会叙事</li>
+          <li>秒级回复，而非等待数天</li>
+          <li>随时取消，无承诺期</li>
+        </ul>
+        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-secondary">立即开始</a>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-badge">最受欢迎</div>
+        <div class="tier-name">专业引导</div>
+        <div class="tier-price">$499<span style="font-size:20px;font-family:var(--sans);letter-spacing:0">/月</span></div>
+        <div class="tier-price-note">按月订阅</div>
+        <div class="tier-desc">包含自助服务的全部功能，另加最复杂、最重要的问题将被标记供Jon亲自审核 — 24小时内直接回复。</div>
+        <ul class="tier-features">
+          <li>自助服务的全部功能</li>
+          <li>复杂问题自动标记给Jon</li>
+          <li>Jon 24小时内亲自回复</li>
+          <li>每月30分钟战略电话</li>
+          <li>紧急事务直接邮件联系</li>
+        </ul>
+        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-primary">立即开始</a>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">深度嵌入</div>
+        <div class="tier-price" style="font-size:28px;padding-top:6px;">申请制</div>
+        <div class="tier-price-note">名额有限</div>
+        <div class="tier-desc">Jon以分散式运营角色加入 — CMO、CPO、定价负责人或VP战略。适合不只需要顾问建议，而是真正需要运营者进入团队的企业。</div>
+        <ul class="tier-features">
+          <li>专业引导的全部功能</li>
+          <li>Jon直接投入时间 — 每周2–3天</li>
+          <li>接触全团队及利益相关方</li>
+          <li>含董事会及高管准备支持</li>
+          <li>最少3个月，结构化交接</li>
+        </ul>
+        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-secondary">预约探索通话</a>
+        <div class="tier-coming">名额有限 — 现接受候补申请</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">关于</div>
+        <h2 class="section-title">跨职能的连接者。</h2>
+        <div class="about-body" style="margin-top:24px;">
+          <p>Jon Borthwick在高增长SaaS企业内部度过了17年以上的职业生涯 — 不是从外部提供建议，而是作为高级运营者亲自负责定价、GTM与商业战略。他的优势在于跨职能的整合能力：将产品、财务与GTM转化为统一的增长系统。</p>
+          <p>在<strong>LogMeIn</strong>，他工作了13年，见证并推动了ARR从$25M增长至$1B — 主导了GoTo合并的定价策略、$1.25亿收购LastPass，并将LastPass收购后的ARR从$1200万增长至$4000万。在<strong>Cordance</strong>，他作为第4号员工加入，在18个月内通过10次并购将这家PE支持的SaaS并购平台从$0做到$4000万ARR，构建了其整体商业模式。在<strong>Rapid7</strong>，他主导了这家上市MDR服务商的收入变现战略、平台产品包装及ARR提升。</p>
+          <p>本咨询服务正是基于这些经验构建 — 凝练为AI以即时回答绝大多数问题，同时Jon亲自参与每一件重要的事。</p>
+        </div>
+      </div>
+      <div>
+        <div class="about-roles">
+          <div class="role-item">
+            <div class="role-company">Progress Software</div>
+            <div class="role-title">定价战略总监</div>
+            <div class="role-note">现职 · 上市基础设施SaaS企业</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Rapid7</div>
+            <div class="role-title">商业战略高级总监</div>
+            <div class="role-note">上市MDR及网络安全企业</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Cordance</div>
+            <div class="role-title">VP 定价与产品营销</div>
+            <div class="role-note">第4号员工 · ARR $0→$4000万 · 10次并购</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">LogMeIn</div>
+            <div class="role-title">VP 商业战略与运营</div>
+            <div class="role-note">13年 · ARR $25M→$1B · LastPass收购 · GoTo合并</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Toast</div>
+            <div class="role-title">独立定价顾问</div>
+            <div class="role-note">成长期SaaS顾问服务</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="container-narrow">
+    <h2 class="section-title">那些得不到清晰答案的问题 — 在这里提问。</h2>
+    <p class="section-sub">从一个免费问题开始，验证质量。或订阅后，让运营者为您的每一个问题提供答案。</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-primary">试用咨询 →</a>
+      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary" style="color:var(--faint)">直接联系Jon</a>
+    </div>
+    <div class="cta-note">jonborthwick@gmail.com · Boston, MA · borthwickadvisory.com</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand"><strong>Borthwick Advisory</strong> · 面向成长期SaaS企业的分散式高管与战略咨询服务</div>
+  <div class="footer-contact"><a href="mailto:jonborthwick@gmail.com">jonborthwick@gmail.com</a></div>
+</footer>
+
+</body>
+</html>
