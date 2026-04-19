@@ -37,6 +37,45 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── LOGO BAR ── */
+#logos {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 40px;
+}
+.logos-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 28px;
+}
+.logos-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+.logo-img {
+  height: 36px;
+  width: auto;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  transition: opacity 0.2s, filter 0.2s;
+}
+.logo-img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+@media (max-width: 768px) {
+  #logos { padding: 36px 24px; }
+  .logos-strip { gap: 28px; }
+  .logo-img { height: 28px; }
+}
+
 /* ── NAV ── */
 nav {
   position: fixed;
@@ -1150,6 +1189,21 @@ CTA secondary: "Try the free advisory" href="https://app.borthwickadvisory.com"
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<section id="logos">
+  <div class="container">
+    <div class="logos-label">Companies Jon has worked with</div>
+    <div class="logos-strip">
+      <img src="logos/toast.png"    alt="Toast"    class="logo-img">
+      <img src="logos/goto.png"     alt="GoTo"     class="logo-img">
+      <img src="logos/logmein.png"  alt="LogMeIn"  class="logo-img">
+      <img src="logos/lastpass.png" alt="LastPass"  class="logo-img">
+      <img src="logos/rapid7.png"   alt="Rapid7"   class="logo-img">
+      <img src="logos/jive.png"     alt="Jive"     class="logo-img">
     </div>
   </div>
 </section>
