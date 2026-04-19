@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borthwick Advisory — SaaS価格設定・GTM戦略</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0f0f0e; --off-black: #1c1b19; --dark: #2a2927; --mid: #5c5a56;
+  --muted: #8c8a85; --faint: #c4c1bb; --border: #e6e3dd; --bg: #faf9f6;
+  --white: #ffffff; --accent: #1a3a5c; --accent-light: #e8eef5; --accent-mid: #2e5f96;
+  --warm: #8b5e3c; --warm-light: #f5ede5;
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --sans: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--off-black); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,249,246,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-size: 15px; font-weight: 600; color: var(--black); letter-spacing: -0.01em; text-decoration: none; }
+.nav-logo span { color: var(--muted); font-weight: 400; }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { font-size: 14px; color: var(--mid); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--black); }
+.nav-cta { padding: 8px 18px; background: var(--black); color: var(--white) !important; border-radius: 6px; font-size: 13px !important; font-weight: 500; transition: background 0.15s !important; }
+.nav-cta:hover { background: var(--dark) !important; }
+.lang-switcher { display: flex; align-items: center; gap: 2px; margin-left: 16px; padding-left: 16px; border-left: 1px solid var(--border); }
+.lang-btn { font-size: 12px; color: var(--faint); text-decoration: none; padding: 3px 7px; border-radius: 4px; transition: color 0.15s; }
+.lang-btn:hover { color: var(--mid); }
+.lang-btn.active { color: var(--mid); font-weight: 600; }
+section { padding: 100px 40px; }
+.container { max-width: 1040px; margin: 0 auto; }
+.container-narrow { max-width: 720px; margin: 0 auto; }
+#hero { padding-top: 140px; padding-bottom: 100px; background: var(--white); border-bottom: 1px solid var(--border); }
+.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.hero-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 24px; }
+.hero-headline { font-family: var(--serif); font-size: clamp(28px, 3.5vw, 46px); font-weight: 400; line-height: 1.25; color: var(--black); letter-spacing: -0.01em; margin-bottom: 28px; }
+.hero-sub { font-size: 17px; color: var(--mid); line-height: 1.75; margin-bottom: 40px; }
+.hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.btn-primary { display: inline-block; padding: 14px 28px; background: var(--black); color: var(--white); border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; transition: background 0.15s; }
+.btn-primary:hover { background: var(--dark); }
+.btn-secondary { display: inline-block; padding: 14px 28px; background: transparent; color: var(--mid); border-radius: 8px; font-size: 15px; font-weight: 500; text-decoration: none; transition: color 0.15s; }
+.btn-secondary:hover { color: var(--black); }
+.hero-stats { display: flex; gap: 40px; margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.hero-stat-num { font-family: var(--serif); font-size: 34px; font-weight: 400; color: var(--black); letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px; }
+.hero-stat-label { font-size: 12px; color: var(--muted); line-height: 1.5; max-width: 140px; }
+.bot-preview { background: var(--white); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05); }
+.bot-preview-bar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; }
+.bot-preview-title { font-size: 12px; font-weight: 600; color: var(--black); }
+.bot-preview-title span { color: var(--muted); font-weight: 400; }
+.bot-preview-access { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); }
+.bot-preview-body { padding: 20px; }
+.bot-preview-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
+.bot-preview-field { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--off-black); margin-bottom: 14px; line-height: 1.5; }
+.bot-preview-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.bot-preview-chip { font-size: 11px; color: var(--mid); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; white-space: nowrap; }
+.bot-preview-submit { display: flex; align-items: center; gap: 10px; }
+.bot-preview-btn { font-size: 13px; font-weight: 500; color: var(--muted); background: none; border: 1px solid var(--border); border-radius: 6px; padding: 7px 14px; cursor: default; }
+.bot-preview-hint { font-size: 12px; color: var(--faint); }
+.bot-preview-divider { height: 1px; background: var(--border); margin: 16px 0; }
+.bot-preview-response-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.bot-preview-response-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
+.bot-preview-section-head { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 6px; }
+.bot-preview-text { font-size: 12px; color: var(--off-black); line-height: 1.6; margin-bottom: 12px; }
+.bot-preview-fade { height: 40px; background: linear-gradient(to bottom, transparent, var(--white)); margin: -10px -20px 0; }
+#how { background: var(--bg); }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 16px; }
+.section-title { font-family: var(--serif); font-size: clamp(24px, 3vw, 38px); font-weight: 400; color: var(--black); letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 16px; }
+.section-sub { font-size: 17px; color: var(--mid); line-height: 1.75; max-width: 560px; margin-bottom: 64px; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.step { position: relative; }
+.step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--accent-light); color: var(--accent-mid); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.step-title { font-size: 17px; font-weight: 600; color: var(--black); margin-bottom: 10px; }
+.step-body { font-size: 15px; color: var(--mid); line-height: 1.7; }
+#gap { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 56px; }
+.gap-side { background: var(--white); padding: 40px; }
+.gap-side-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+.gap-bad .gap-side-label { color: var(--muted); }
+.gap-good .gap-side-label { color: var(--accent-mid); }
+.gap-indicator { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.gap-items { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.gap-items li { font-size: 15px; color: var(--off-black); padding-left: 22px; position: relative; line-height: 1.6; }
+.gap-bad .gap-items li::before { content: '×'; position: absolute; left: 0; color: var(--faint); font-weight: 600; }
+.gap-good .gap-items li::before { content: '→'; position: absolute; left: 0; color: var(--accent-mid); font-weight: 500; }
+#usecases { background: var(--bg); }
+.cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 56px; }
+.case-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 30px; }
+.case-q { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 10px; font-style: italic; }
+.case-q::before { content: '「'; }
+.case-q::after { content: '」'; }
+.case-a { font-size: 14px; color: var(--mid); line-height: 1.7; }
+#sample { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.sample-wrap { margin-top: 48px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.05); }
+.sample-input { background: var(--bg); padding: 32px 40px; border-bottom: 1px solid var(--border); }
+.sample-input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.sample-field-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.sample-field-hint { font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 10px; color: var(--faint); }
+.sample-field-value { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-size: 14px; color: var(--off-black); line-height: 1.6; font-style: italic; }
+.sample-response { background: var(--white); padding: 40px; }
+.sample-response-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.sample-response-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); }
+.sample-response-actions { display: flex; gap: 8px; }
+.sample-action-btn { font-size: 12px; color: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; text-decoration: none; }
+.sample-section { margin-bottom: 24px; }
+.sample-section-head { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-mid); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.sample-section-body { font-size: 15px; color: var(--off-black); line-height: 1.8; }
+.sample-point { margin-bottom: 18px; }
+.sample-point-head { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--black); margin-bottom: 6px; }
+.sample-point-body { font-size: 14px; color: var(--mid); line-height: 1.75; }
+.sample-priority { font-size: 14px; color: var(--off-black); line-height: 1.7; background: var(--bg); border-radius: 8px; padding: 14px 16px; }
+.sample-flag { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.sample-flag-btn { font-size: 13px; color: var(--mid); border: 1px solid var(--border); border-radius: 6px; padding: 7px 14px; text-decoration: none; }
+.sample-flag-note { font-size: 13px; color: var(--muted); }
+.sample-sign { font-size: 14px; color: var(--muted); font-style: italic; margin-top: 20px; }
+#tiers { background: var(--bg); }
+.free-trial-banner { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; margin-top: 48px; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+.free-trial-left { display: flex; align-items: center; gap: 16px; }
+.free-trial-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--accent-light); color: var(--accent-mid); padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.free-trial-text { font-size: 15px; color: var(--off-black); }
+.free-trial-text span { color: var(--mid); font-size: 14px; }
+.free-trial-cta { font-size: 14px; font-weight: 500; color: var(--accent-mid); text-decoration: none; white-space: nowrap; transition: color 0.15s; }
+.free-trial-cta:hover { color: var(--black); }
+.tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.tier-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 36px 32px; position: relative; transition: box-shadow 0.2s; }
+.tier-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+.tier-card.featured { border-color: var(--accent-mid); box-shadow: 0 0 0 1px var(--accent-mid); }
+.tier-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-mid); color: var(--white); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.tier-name { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.tier-price { font-family: var(--serif); font-size: 38px; font-weight: 400; color: var(--black); letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
+.tier-price-note { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.tier-desc { font-size: 14px; color: var(--mid); line-height: 1.7; margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+.tier-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.tier-features li { font-size: 14px; color: var(--off-black); padding-left: 20px; position: relative; line-height: 1.5; }
+.tier-features li::before { content: '✓'; position: absolute; left: 0; color: var(--accent-mid); font-size: 12px; font-weight: 700; top: 2px; }
+.tier-cta { display: block; text-align: center; padding: 11px 20px; border-radius: 7px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.15s; }
+.tier-cta-primary { background: var(--black); color: var(--white); }
+.tier-cta-primary:hover { background: var(--dark); }
+.tier-cta-secondary { background: var(--bg); color: var(--off-black); border: 1px solid var(--border); }
+.tier-cta-secondary:hover { border-color: var(--faint); background: var(--white); }
+.tier-coming { font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px; }
+#about { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.about-body p { font-size: 16px; color: var(--mid); line-height: 1.85; margin-bottom: 20px; }
+.about-body p:last-child { margin-bottom: 0; }
+.about-body strong { color: var(--off-black); font-weight: 600; }
+.about-roles { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.role-item { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 3px; }
+.role-item:last-child { border-bottom: none; }
+.role-company { font-size: 14px; font-weight: 600; color: var(--black); }
+.role-title { font-size: 13px; color: var(--mid); }
+.role-note { font-size: 12px; color: var(--muted); font-style: italic; }
+#cta { background: var(--off-black); padding: 120px 40px; text-align: center; }
+#cta .section-title { color: var(--white); margin-bottom: 20px; font-size: clamp(24px, 3vw, 40px); }
+#cta .section-sub { color: var(--faint); margin: 0 auto 48px; }
+.cta-note { font-size: 13px; color: var(--muted); margin-top: 16px; }
+footer { background: var(--black); padding: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-brand { font-size: 14px; color: var(--muted); }
+.footer-brand strong { color: var(--faint); font-weight: 600; }
+.footer-contact { font-size: 13px; color: var(--muted); }
+.footer-contact a { color: var(--faint); text-decoration: none; }
+.footer-contact a:hover { color: var(--white); }
+@media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .hero-visual { display: none; } .sample-input-row { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  nav .nav-links li:not(:last-child) { display: none; }
+  section { padding: 70px 24px; }
+  #hero { padding: 120px 24px 80px; }
+  .steps { grid-template-columns: 1fr; gap: 32px; }
+  .gap-grid { grid-template-columns: 1fr; }
+  .tiers-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .free-trial-banner { flex-direction: column; align-items: flex-start; }
+  footer { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/index-ja" class="nav-logo">Borthwick Advisory <span>/ SaaS戦略</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">仕組み</a></li>
+    <li><a href="#tiers">料金</a></li>
+    <li><a href="#about">について</a></li>
+    <li><a href="https://borthwick-advisor-bot.netlify.app" class="nav-cta">アドバイザリーを試す</a></li>
+  </ul>
+  <div class="lang-switcher">
+    <a href="/" class="lang-btn">EN</a>
+    <a href="/index-ja" class="lang-btn active">日本語</a>
+    <a href="/index-zh" class="lang-btn">中文</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-eyebrow">フラクショナルSaaSアドバイザリー · AI搭載</div>
+        <h1 class="hero-headline">プロダクト、ファイナンス、GTMを<br>一つの成長システムへ。</h1>
+        <p class="hero-sub">17年のSaaSオペレーター経験 — AIによって即座にアクセス可能、重要な場面では人間がバックアップ。</p>
+        <div class="hero-actions">
+          <a href="#tiers" class="btn-primary">仕組みを見る</a>
+          <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary">Jonに質問する →</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">17+</div>
+            <div class="hero-stat-label">SaaSでの年数、ARR $25Mから$1Bへ</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">3</div>
+            <div class="hero-stat-label">エンゲージメント層 — セルフサービスから組み込みまで</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">24h</div>
+            <div class="hero-stat-label">フラグ付き質問への応答時間</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="bot-preview">
+          <div class="bot-preview-bar">
+            <div class="bot-preview-title">Borthwick Advisory <span>/ Strategy Q&amp;A</span></div>
+            <div class="bot-preview-access">アドバイザリーアクセス</div>
+          </div>
+          <div class="bot-preview-body">
+            <div class="bot-preview-label">会社のコンテキスト <span style="color:var(--faint);font-weight:400;text-transform:none;letter-spacing:0;font-size:10px">任意、回答の精度が向上</span></div>
+            <div class="bot-preview-field">インディーゲーム販売、100タイトル以上、3,000人のサブスクライバー、月額$5。</div>
+            <div class="bot-preview-label">あなたの質問</div>
+            <div class="bot-preview-field">今後12ヶ月で規模を2倍にするにはどうすればよいですか？</div>
+            <div class="bot-preview-chips">
+              <div class="bot-preview-chip">フリーミアム層の価格設定方法は？</div>
+              <div class="bot-preview-chip">アップマーケット移行時のGTMの変化は？</div>
+            </div>
+            <div class="bot-preview-submit">
+              <div class="bot-preview-btn">回答を取得</div>
+              <div class="bot-preview-hint">約10秒で回答</div>
+            </div>
+            <div class="bot-preview-divider"></div>
+            <div class="bot-preview-response">
+              <div class="bot-preview-response-header">
+                <div class="bot-preview-response-label">アドバイザリーレスポンス</div>
+              </div>
+              <div class="bot-preview-section-head">コンテキスト</div>
+              <div class="bot-preview-text">サブスクリプション型ゲームバンドルを運営しています。本当の問題は3,000人のサブスクライバー時点でどの成長レバーが最も重要かということです。</div>
+              <div class="bot-preview-section-head">回答</div>
+              <div class="bot-preview-text">3,000人のサブスクライバーと月額$5で、ARRは約$180Kです。2倍にするには6,000人のサブスクライバーを獲得するか、サブスクライバーあたりの収益を拡大する必要があります...</div>
+            </div>
+            <div class="bot-preview-fade"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gap">
+  <div class="container">
+    <div class="section-label">課題</div>
+    <h2 class="section-title">成長段階のSaaSは<br>二つの悪い選択肢の間で行き詰まっています。</h2>
+    <div class="gap-grid">
+      <div class="gap-side gap-bad">
+        <div class="gap-side-label"><div class="gap-indicator"></div>既存の選択肢</div>
+        <ul class="gap-items">
+          <li>若手コンサルタントはフレームワークを作るが、意思決定はしない</li>
+          <li>VP採用には$250K以上かかり、立ち上がりに6ヶ月かかる</li>
+          <li>エージェンシーはゼネラリスト — SaaS価格設定の専門家ではない</li>
+          <li>AIツールはあなたの市場の組織的知識を持っていない</li>
+          <li>取締役会資料は運営の現実と結びついていない</li>
+        </ul>
+      </div>
+      <div class="gap-side gap-good">
+        <div class="gap-side-label"><div class="gap-indicator"></div>Borthwick Advisory</div>
+        <ul class="gap-items">
+          <li>17年のSaaSオペレーター経験がすべての回答に凝縮</li>
+          <li>即時利用可能 — 採用プロセスなし、立ち上がり時間なし</li>
+          <li>実際に使えるための具体的で定量的な回答</li>
+          <li>複雑な質問はJonに直接エスカレーション — 24時間以内に確認</li>
+          <li>一つの関係で価格設定、GTM、取締役会ナラティブをカバー</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <div class="section-label">仕組み</div>
+    <h2 class="section-title">何でも聞いてください。<br>オペレーターの答えを得る。</h2>
+    <p class="section-sub">このアドバイザリーは17年以上のSaaS価格設定、GTM、製品戦略でトレーニングされたAIによって提供されています — 重要なことについてはJonが関与しています。</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">質問する</div>
+        <div class="step-body">価格設定、GTM、戦略に関する質問を入力してください — パッケージング、競合ポジショニング、取締役会準備、セグメンテーションなど。スケジュール調整も待ち時間も不要です。</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">オペレーターの回答を得る</div>
+        <div class="step-body">AIはJonのSaaS経験 — LogMeInでのスケール、Cordanceの買収、Rapid7の商業戦略 — を活用して、具体的で実行可能な回答を提供します。フレームワークではなく、答えです。</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Jonが重要事項を確認</div>
+        <div class="step-body">複雑または重要な質問はJonの個人レビューのためにフラグが立てられます。多くの場合、数時間以内に直接回答が届きます。難しい問題でボットだけに頼ることはありません。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="usecases">
+  <div class="container">
+    <div class="section-label">よくある質問</div>
+    <h2 class="section-title">リアルな質問。オペレーターの回答。</h2>
+    <p class="section-sub">成長段階のSaaSチームが毎週直面する質問 — そして明確な答えが得られない問題。</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-q">使用量ベースの層を追加することを考えています。シートベースの顧客を共食いせずにどう価格設定しますか？</div>
+        <div class="case-a">LogMeInとCordanceでハイブリッド価格設定を運用したJonの経験から即座に回答 — フロア価格設定とグランドファザーリングロジックの具体的なガードレール付き。</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">取締役会は競合優位性のスライドを求めています。真の差別化がありますが、ありきたりに聞こえずに表現できません。</div>
+        <div class="case-a">財務成果に結びついた取締役会ナラティブに関するJonの直接フィードバックでインタラクティブに作業します。</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">エンタープライズに参入します。SMBからアップマーケットに移行する際、GTMモーションは何が変わりますか？</div>
+        <div class="case-a">オペレーター経験からの詳細な回答。チャンピオン特定、調達サイクル、概念実証構造に関する具体的なガイダンス。</div>
+      </div>
+      <div class="case-card">
+        <div class="case-q">買収されたばかりです。顧客を失わずに統合中の価格設定をどう守りますか？</div>
+        <div class="case-a">JonはCordanceで10件の買収における価格設定を主導しました（18ヶ月でARR $0から$4000万）。これはJonに直接エスカレーションされる質問です。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sample">
+  <div class="container">
+    <div class="section-label">実際の動作を見る</div>
+    <h2 class="section-title">実際の質問。実際の回答。</h2>
+    <p class="section-sub">これはアドバイザリーからの実際の出力です — 未編集。質問は3,000人の加入者を持つインディーゲームサブスクリプション会社から来ました。</p>
+    <div class="sample-wrap">
+      <div class="sample-input">
+        <div class="sample-input-row">
+          <div>
+            <div class="sample-field-label">会社のコンテキスト <span class="sample-field-hint">任意、回答の精度が向上</span></div>
+            <div class="sample-field-value">インディーゲームを販売しています — 100タイトル以上、3,000人のサブスクライバー、月額$5。</div>
+          </div>
+          <div>
+            <div class="sample-field-label">質問</div>
+            <div class="sample-field-value">今後12ヶ月で規模を2倍にするにはどうすればよいですか？</div>
+          </div>
+        </div>
+      </div>
+      <div class="sample-response">
+        <div class="sample-response-header">
+          <div class="sample-response-label">アドバイザリーレスポンス</div>
+          <div class="sample-response-actions">
+            <span class="sample-action-btn">コピー</span>
+            <span class="sample-action-btn">新しい質問</span>
+          </div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">コンテキスト</div>
+          <div class="sample-section-body">サブスクリプション型ゲームバンドルを運営しています — Humble ChoiceやXbox Game Pass Indieティアを想像してください。本当の問題は3,000人のサブスクライバー時点でどの成長レバーが最も重要かということです。</div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">回答</div>
+          <div class="sample-section-body">
+            <p style="margin-bottom:18px;">3,000人のサブスクライバーと月額$5で、ARRは約$180Kです。2倍にするには6,000人のサブスクライバーを獲得するか、サブスクライバーあたりの収益を拡大する必要があります — 理想的には両方。優先順位は以下の通りです：</p>
+            <div class="sample-point">
+              <div class="sample-point-head">1. 水を漏れるバケツに注ぐ前にリテンションを修正する</div>
+              <div class="sample-point-body">獲得に費用をかける前に、月次チャーン率を把握してください。このスケールでは、月次チャーン8%でも毎年ほぼすべてのサブスクライバーベースを置き換えるだけでフラットになります。月次5%以下を目標にしてください。リテンションは成長の乗数です。</div>
+            </div>
+            <div class="sample-point">
+              <div class="sample-point-head">2. 第二の価格ポイントを追加 — 年間プラン</div>
+              <div class="sample-point-body">年間プランを$45〜48/年（20〜25%割引）で提供してください。これは3つのことを行います：そのコホートの月次チャーンをほぼゼロに下げ、現金を前倒しにし、最優良顧客からのコミットメントを示します。</div>
+            </div>
+            <div class="sample-point">
+              <div class="sample-point-head">3. 紹介ループを開始する</div>
+              <div class="sample-point-body">既存の3,000人のサブスクライバーは最も安い獲得チャネルですが、ほぼ確実に活用されていません。ユニークリンクを提供してください — 彼らに1ヶ月無料、紹介された友人に初月無料または割引。ゲームオーディエンスは部族的です。</div>
+            </div>
+          </div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">今後90日間の優先順位</div>
+          <div class="sample-priority">1. チャーン率を把握する &nbsp;·&nbsp; 2. 年間プランを開始する &nbsp;·&nbsp; 3. 紹介プログラムを開始する &nbsp;·&nbsp; 4. 一つの流通パートナーシップをテストする</div>
+        </div>
+        <div class="sample-section">
+          <div class="sample-section-head">検証すべき一つのこと</div>
+          <div class="sample-section-body">これら100以上のゲームをサブスクリプションモデルでバンドルして配布するライセンス権を持っていますか？そのカタログ関係があなたのモートです。獲得を積極的にスケールする前に、契約上しっかりしていることを確認してください。</div>
+        </div>
+        <div class="sample-sign">— Borthwick Advisory</div>
+        <div class="sample-flag">
+          <span class="sample-flag-btn">⚑ Jonのレビューのためにフラグを立てる</span>
+          <span class="sample-flag-note">複雑または重要な質問？Jonが24時間以内に対応します。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tiers">
+  <div class="container">
+    <div class="section-label">料金プラン</div>
+    <h2 class="section-title">すぐに始める。必要なときにエスカレーション。</h2>
+    <p class="section-sub">3つの層 — あなたの状況に実際に必要なJonへの直接アクセスの量に基づいて構築されています。</p>
+    <div class="free-trial-banner">
+      <div class="free-trial-left">
+        <span class="free-trial-badge">無料</span>
+        <div class="free-trial-text">
+          1つの質問を無料でお試しください。アカウント不要。 <span>コミットする前に品質をご確認ください。</span>
+        </div>
+      </div>
+      <a href="https://borthwick-advisor-bot.netlify.app" class="free-trial-cta">無料で質問する →</a>
+    </div>
+    <div class="tiers-grid">
+      <div class="tier-card">
+        <div class="tier-name">セルフサービス</div>
+        <div class="tier-price">$149<span style="font-size:20px;font-family:var(--sans);letter-spacing:0">/月</span></div>
+        <div class="tier-price-note">いつでもキャンセル可</div>
+        <div class="tier-desc">JonのSaaS経験でトレーニングされたAI搭載アドバイザリーへの無制限アクセス。価格設定、GTM、戦略に関する即時回答 — スケジュール調整不要。</div>
+        <ul class="tier-features">
+          <li>アドバイザリーインターフェースを通じた無制限の質問</li>
+          <li>17年以上のSaaSオペレーター経験でトレーニングされたAI回答</li>
+          <li>価格設定、GTM、セグメンテーション、取締役会ナラティブ</li>
+          <li>数日ではなく数秒で回答</li>
+          <li>いつでもキャンセル可、コミットメント不要</li>
+        </ul>
+        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-secondary">始める</a>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-badge">最も人気</div>
+        <div class="tier-name">ガイド付き</div>
+        <div class="tier-price">$499<span style="font-size:20px;font-family:var(--sans);letter-spacing:0">/月</span></div>
+        <div class="tier-price-note">月次契約</div>
+        <div class="tier-desc">セルフサービスのすべてに加え、最も複雑で重要な質問がJonの個人レビューのためにフラグが立てられます — 24時間以内に直接回答。</div>
+        <ul class="tier-features">
+          <li>セルフサービスのすべての機能</li>
+          <li>複雑な質問がJonに自動的にフラグ付け</li>
+          <li>24時間以内のJonの個人的な回答</li>
+          <li>月次30分戦略コール</li>
+          <li>緊急事項への直接メールアクセス</li>
+        </ul>
+        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-primary">始める</a>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">エンベデッド</div>
+        <div class="tier-price" style="font-size:28px;padding-top:6px;">申請制</div>
+        <div class="tier-price-note">枠数限定</div>
+        <div class="tier-desc">Jonがフラクショナルオペレーターとして参加 — CMO、CPO、価格設定責任者、またはVP戦略。アドバイザーをメールで受け取るだけでなく、実際に部屋にオペレーターが必要な企業向け。</div>
+        <ul class="tier-features">
+          <li>ガイド付きのすべての機能</li>
+          <li>Jonの直接時間 — 週2〜3日</li>
+          <li>チーム全体およびステークホルダーへのアクセス</li>
+          <li>取締役会および経営幹部準備を含む</li>
+          <li>最低3ヶ月、構造化されたハンドオフ</li>
+        </ul>
+        <a href="https://borthwick-advisor-bot.netlify.app" class="tier-cta tier-cta-secondary">ディスカバリーコールを予約</a>
+        <div class="tier-coming">枠数限定 — 現在ウェイトリスト受付中</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">について</div>
+        <h2 class="section-title">部門間をつなぐ架け橋。</h2>
+        <div class="about-body" style="margin-top:24px;">
+          <p>Jon Borthwickは17年以上、高成長SaaS企業の中で過ごしてきました — 外からアドバイスするのではなく、シニアオペレーターとして価格設定、GTM、商業戦略を担当してきました。彼の強みは部門間の結合組織です：プロダクト、ファイナンス、GTMを統一された成長システムに変えること。</p>
+          <p><strong>LogMeIn</strong>では13年間、ARR $25Mから$1Bへのスケールを担当しました — GoToマージャーの価格戦略、$125MのLastPass買収を主導し、買収後LastPassのARRを$12Mから$40Mへ成長させました。<strong>Cordance</strong>では社員#4として、18ヶ月で10件の買収を通じて$0から$4000万ARRへ成長したPEバックドSaaSロールアップの商業モデルを構築しました。<strong>Rapid7</strong>では、上場MDRプロバイダーの収益化戦略、プラットフォームパッケージング、ARRアップリフトを主導しました。</p>
+          <p>このアドバイザリーはその経験に基づいて構築されています — ほとんどの質問に即座に回答できるAIに凝縮され、重要なことすべてにJonが関与しています。</p>
+        </div>
+      </div>
+      <div>
+        <div class="about-roles">
+          <div class="role-item">
+            <div class="role-company">Progress Software</div>
+            <div class="role-title">価格戦略ディレクター</div>
+            <div class="role-note">現職 · 上場インフラSaaS企業</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Rapid7</div>
+            <div class="role-title">商業戦略シニアディレクター</div>
+            <div class="role-note">上場MDR・サイバーセキュリティ企業</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Cordance</div>
+            <div class="role-title">VP 価格設定＆プロダクトマーケティング</div>
+            <div class="role-note">社員#4 · ARR $0→$4000万 · 10件の買収</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">LogMeIn</div>
+            <div class="role-title">VP ビジネス戦略＆オペレーション</div>
+            <div class="role-note">13年 · ARR $25M→$1B · LastPass買収 · GoToマージャー</div>
+          </div>
+          <div class="role-item">
+            <div class="role-company">Toast</div>
+            <div class="role-title">独立価格設定アドバイザー</div>
+            <div class="role-note">成長段階SaaSアドバイザリー</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="container-narrow">
+    <h2 class="section-title">明確な答えが得られない質問 — ここで聞いてください。</h2>
+    <p class="section-sub">無料の質問から始めて、品質を確認してください。またはサブスクリプションで、すべてについてオペレーターの回答を取得してください。</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-primary">アドバイザリーを試す →</a>
+      <a href="https://borthwick-advisor-bot.netlify.app" class="btn-secondary" style="color:var(--faint)">Jonに直接相談する</a>
+    </div>
+    <div class="cta-note">jonborthwick@gmail.com · Boston, MA · borthwickadvisory.com</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand"><strong>Borthwick Advisory</strong> · 成長段階SaaS向けフラクショナルエグゼクティブ＆戦略アドバイザリー</div>
+  <div class="footer-contact"><a href="mailto:jonborthwick@gmail.com">jonborthwick@gmail.com</a></div>
+</footer>
+
+</body>
+</html>
