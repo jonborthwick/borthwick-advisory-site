@@ -29,7 +29,7 @@ export function requireAuth(req) {
   return ok ? {ok:true} : {ok:false,response:json({error:'Unauthorized'},401)};
 }
 export function dealId(url) { return crypto.createHash('sha256').update(String(url).trim().toLowerCase()).digest('hex').slice(0,20); }
-export function num(v) { const n = Number(v); return Number.isFinite(n) ? n : null; }
+export function num(v) { if (v === null || v === undefined || v === '') return null; const n = Number(v); return Number.isFinite(n) ? n : null; }
 
 export function computeScore(deal) {
   const s = deal.scores || {};
