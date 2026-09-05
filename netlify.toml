@@ -5,8 +5,17 @@
 [build.environment]
   NODE_VERSION = "20"
 
+[functions."deal-scout"]
+  schedule = "@daily"
+
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/dealdesk/*"
+  [headers.values]
+    Cache-Control = "no-store"
+    X-Robots-Tag = "noindex, nofollow"
