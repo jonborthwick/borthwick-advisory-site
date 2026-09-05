@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Deal Desk — Borthwick Advisory</title>
+  <style>
+:root{--ink:#10233f;--muted:#687489;--line:#d9e1ea;--panel:#f7f9fc;--blue:#17365d;--green:#1f7a4d;--amber:#a26712;--red:#a33434;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.shell{max-width:1180px;margin:0 auto;padding:32px 22px 70px}.topbar{display:flex;gap:24px;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:22px}.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:800;color:var(--muted)}h1{font-size:34px;line-height:1;margin:8px 0 8px}h2{margin-top:0}.sub{margin:0;color:var(--muted)}.actions{display:flex;gap:9px;flex-wrap:wrap}button,select,input,textarea{font:inherit}button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:10px 14px;cursor:pointer;color:var(--ink)}button:hover{border-color:#aab7c6}.primary{background:var(--blue);border-color:var(--blue);color:#fff}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}.kpis article{border:1px solid var(--line);background:var(--panel);padding:16px;border-radius:12px}.kpis span,.kpis small{display:block;color:var(--muted);font-size:12px}.kpis strong{display:block;font-size:27px;margin:4px 0}.controls{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}.filter-row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}.filter-row label{font-size:12px;color:var(--muted);font-weight:700}.filter-row select,.filter-row input{display:block;margin-top:5px;min-height:40px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;color:var(--ink)}.search{flex:1;min-width:220px}.search input{width:100%}.status{font-size:12px;color:var(--muted);margin-top:10px}.deal-list{display:grid;gap:12px}.deal{border:1px solid var(--line);border-radius:13px;padding:17px;background:#fff}.deal-top{display:grid;grid-template-columns:1fr auto;gap:20px}.deal h3{margin:0 0 5px;font-size:18px}.deal a{color:var(--blue);text-decoration:none}.meta{font-size:12px;color:var(--muted)}.score{min-width:90px;text-align:right}.score strong{font-size:25px;display:block}.badge{display:inline-flex;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;background:#edf1f6;color:var(--ink)}.badge.good{background:#e4f3ea;color:var(--green)}.badge.watch{background:#fff1d8;color:var(--amber)}.badge.no{background:#f9e3e3;color:var(--red)}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:15px}.metric{background:var(--panel);border-radius:9px;padding:10px}.metric b,.metric span{display:block}.metric b{font-size:15px}.metric span{font-size:10px;color:var(--muted);margin-top:3px}.unknowns{margin:13px 0 0;font-size:12px;color:var(--muted)}.deal-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.deal-actions button{padding:7px 10px;font-size:12px}.source-note{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}dialog{border:0;border-radius:14px;padding:0;box-shadow:0 20px 60px rgba(16,35,63,.24);width:min(520px,calc(100% - 32px))}dialog::backdrop{background:rgba(16,35,63,.45)}.modal-card{padding:22px}.modal-card label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:12px 0}.modal-card input,.modal-card textarea{width:100%;display:block;margin-top:6px;border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--ink)}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.empty{padding:40px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}@media(max-width:800px){.topbar{display:block}.actions{margin-top:16px}.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.deal-top{grid-template-columns:1fr}.score{text-align:left}}@media(max-width:440px){.kpis{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">BORTHWICK ADVISORY</div>
+        <h1>Deal Desk</h1>
+        <p class="sub">AI-durable software acquisition queue. The system finds; Jon decides.</p>
+      </div>
+      <div class="actions">
+        <button id="runScout" class="primary">Run scout</button>
+        <button id="addDeal">Add URL</button>
+        <button id="authButton">Unlock</button>
+      </div>
+    </header>
+
+    <section class="kpis" aria-label="Portfolio sourcing metrics">
+      <article><span>Queue</span><strong id="kpiQueue">—</strong><small>active candidates</small></article>
+      <article><span>Anchor-ready</span><strong id="kpiAnchor">—</strong><small>all hard gates clear</small></article>
+      <article><span>Needs evidence</span><strong id="kpiUnknown">—</strong><small>unknowns blocking decision</small></article>
+      <article><span>Passed</span><strong id="kpiPassed">—</strong><small>killed quickly</small></article>
+    </section>
+
+    <section class="controls">
+      <div class="filter-row">
+        <label>Stage
+          <select id="stageFilter">
+            <option value="active">Active</option><option value="all">All</option><option value="new">New</option><option value="review">Review</option><option value="watch">Watch</option><option value="data-room">Data room</option><option value="loi">LOI</option><option value="pass">Pass</option>
+          </select>
+        </label>
+        <label>Sort
+          <select id="sortBy"><option value="rank">IC rank</option><option value="ai">AI durability</option><option value="score">Total score</option><option value="newest">Newest</option></select>
+        </label>
+        <label class="search">Search<input id="searchInput" type="search" placeholder="company, vertical, source…" /></label>
+      </div>
+      <div id="statusLine" class="status" role="status">Unlock the dashboard to load deals.</div>
+    </section>
+
+    <section id="dealList" class="deal-list" aria-live="polite"></section>
+  </main>
+
+  <dialog id="authDialog"><form method="dialog" class="modal-card" id="authForm"><h2>Unlock Deal Desk</h2><p>Enter the private Deal Desk token configured in Netlify.</p><label>Token<input id="tokenInput" type="password" autocomplete="current-password" required /></label><div class="modal-actions"><button value="cancel">Cancel</button><button class="primary" value="default">Unlock</button></div></form></dialog>
+  <dialog id="dealDialog"><form method="dialog" class="modal-card" id="dealForm"><h2>Add candidate</h2><label>URL<input id="dealUrl" type="url" required placeholder="https://…" /></label><label>Company / listing title<input id="dealTitle" type="text" placeholder="Optional" /></label><label>Notes<textarea id="dealNotes" rows="4" placeholder="Why it caught your eye…"></textarea></label><div class="modal-actions"><button value="cancel">Cancel</button><button class="primary" value="default">Add to queue</button></div></form></dialog>
+
+<script type="module">
+const API='/.netlify/functions/dealdesk';let token=sessionStorage.getItem('dealdesk-token')||'';let deals=[];const $=id=>document.getElementById(id),statusLine=$('statusLine');
+function authHeaders(extra={}){return{'Content-Type':'application/json',...(token?{Authorization:`Bearer ${token}`}:{ }),...extra}}
+async function api(path,options={}){const res=await fetch(`${API}?action=${encodeURIComponent(path)}`,{...options,headers:authHeaders(options.headers||{})});if(res.status===401){token='';sessionStorage.removeItem('dealdesk-token');updateAuth();throw new Error('Locked — enter the Deal Desk token.')}const body=await res.json().catch(()=>({}));if(!res.ok)throw new Error(body.error||`Request failed (${res.status})`);return body}
+function updateAuth(){$('authButton').textContent=token?'Locked ✓':'Unlock';$('runScout').disabled=!token;$('addDeal').disabled=!token}
+function fmtMoney(n){return Number.isFinite(Number(n))?`$${Math.round(Number(n)).toLocaleString()}`:'—'}function fmtPct(n){return Number.isFinite(Number(n))?`${Math.round(Number(n))}%`:'—'}function gateClass(d){return d.anchorEligibility==='PASS'?'good':d.anchorEligibility==='NO'?'no':'watch'}function scoreValue(v,max){return Number.isFinite(Number(v))?`${Number(v)}/${max}`:'—'}
+function filteredDeals(){const stage=$('stageFilter').value,q=$('searchInput').value.trim().toLowerCase();let out=deals.filter(d=>stage==='all'?true:stage==='active'?d.stage!=='pass':d.stage===stage);if(q)out=out.filter(d=>[d.title,d.vertical,d.source,d.url,d.notes].join(' ').toLowerCase().includes(q));const sort=$('sortBy').value;out.sort((a,b)=>sort==='ai'?(b.scores?.aiDurability??-1)-(a.scores?.aiDurability??-1):sort==='score'?(b.totalScore??-1)-(a.totalScore??-1):sort==='newest'?String(b.createdAt).localeCompare(String(a.createdAt)):(b.icRank??-1)-(a.icRank??-1));return out}
+function renderKpis(){const active=deals.filter(d=>d.stage!=='pass');$('kpiQueue').textContent=active.length;$('kpiAnchor').textContent=active.filter(d=>d.anchorEligibility==='PASS').length;$('kpiUnknown').textContent=active.filter(d=>(d.unknowns||[]).length>0).length;$('kpiPassed').textContent=deals.filter(d=>d.stage==='pass').length}
+function escapeHtml(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function render(){renderKpis();const rows=filteredDeals(),list=$('dealList');if(!rows.length){list.innerHTML='<div class="empty">No candidates in this view.</div>';return}list.innerHTML=rows.map(d=>`<article class="deal" data-id="${d.id}"><div class="deal-top"><div><div><span class="badge ${gateClass(d)}">${d.anchorEligibility||'REVIEW'}</span> <span class="badge">${d.stage||'new'}</span></div><h3><a href="${d.url}" target="_blank" rel="noopener">${escapeHtml(d.title||d.url)}</a></h3><div class="meta">${escapeHtml(d.vertical||'Unclassified')} · ${escapeHtml(d.source||'manual')} · last seen ${new Date(d.lastSeenAt||d.createdAt).toLocaleDateString()}</div></div><div class="score"><strong>${Number.isFinite(Number(d.totalScore))?d.totalScore:'—'}</strong><span class="meta">/ 100</span></div></div><div class="grid"><div class="metric"><b>${scoreValue(d.scores?.aiDurability,35)}</b><span>AI durability</span></div><div class="metric"><b>${scoreValue(d.scores?.operations,25)}</b><span>Clean ops / billing</span></div><div class="metric"><b>${scoreValue(d.scores?.economics,18)}</b><span>Economics</span></div><div class="metric"><b>${scoreValue(d.scores?.retention,12)}</b><span>Retention</span></div><div class="metric"><b>${scoreValue(d.scores?.technical,10)}</b><span>Technical</span></div></div><div class="grid"><div class="metric"><b>${fmtMoney(d.askingPrice)}</b><span>Asking price</span></div><div class="metric"><b>${fmtMoney(d.arr)}</b><span>ARR</span></div><div class="metric"><b>${fmtMoney(d.normalizedEbitda)}</b><span>Normalized EBITDA</span></div><div class="metric"><b>${fmtPct(d.autoCollectedPct)}</b><span>Auto-collected</span></div><div class="metric"><b>${Number.isFinite(Number(d.ownerHours))?`${d.ownerHours}h`:'—'}</b><span>Owner hours / wk</span></div></div>${(d.unknowns||[]).length?`<div class="unknowns"><b>Blocking unknowns:</b> ${escapeHtml(d.unknowns.slice(0,5).join(' · '))}</div>`:''}<div class="deal-actions">${['review','watch','data-room','loi','pass'].map(s=>`<button data-stage="${s}" ${d.stage===s?'disabled':''}>${s}</button>`).join('')}</div><div class="source-note">${escapeHtml(d.summary||d.notes||'No research note yet.')}</div></article>`).join('');list.querySelectorAll('[data-stage]').forEach(btn=>btn.addEventListener('click',async e=>{const card=e.currentTarget.closest('.deal'),stage=e.currentTarget.dataset.stage;e.currentTarget.disabled=true;try{await api('deals',{method:'PATCH',body:JSON.stringify({id:card.dataset.id,stage})});await loadDeals()}catch(err){statusLine.textContent=err.message;e.currentTarget.disabled=false}}))}
+async function loadDeals(){if(!token)return;statusLine.textContent='Loading queue…';try{const body=await api('deals');deals=body.deals||[];statusLine.textContent=`${deals.length} candidates · updated ${new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}`;render()}catch(err){statusLine.textContent=err.message}}
+$('authButton').addEventListener('click',()=>$('authDialog').showModal());$('authForm').addEventListener('submit',async e=>{e.preventDefault();token=$('tokenInput').value.trim();sessionStorage.setItem('dealdesk-token',token);$('authDialog').close();updateAuth();await loadDeals()});$('addDeal').addEventListener('click',()=>$('dealDialog').showModal());$('dealForm').addEventListener('submit',async e=>{e.preventDefault();try{await api('deals',{method:'POST',body:JSON.stringify({url:$('dealUrl').value.trim(),title:$('dealTitle').value.trim(),notes:$('dealNotes').value.trim(),source:'manual'})});$('dealDialog').close();e.target.reset();await loadDeals()}catch(err){statusLine.textContent=err.message}});$('runScout').addEventListener('click',async()=>{const btn=$('runScout');btn.disabled=true;btn.textContent='Scouting…';statusLine.textContent='Agent is searching the current market…';try{const body=await api('run-scout',{method:'POST',body:'{}'});statusLine.textContent=`Scout added ${body.added||0} new candidates.`;await loadDeals()}catch(err){statusLine.textContent=err.message}finally{btn.disabled=!token;btn.textContent='Run scout'}});['stageFilter','sortBy'].forEach(id=>$(id).addEventListener('change',render));$('searchInput').addEventListener('input',render);updateAuth();if(token)loadDeals();
+</script>
+</body>
+</html>
